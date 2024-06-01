@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.zoo.PlanAktywnosciController"
-            prefHeight="800.0" prefWidth="1000.0">
 
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.zoo.PlanAktywnosciController">
+   <children>
+      <ToolBar prefHeight="57.0" prefWidth="1000.0">
+         <items>
+            <Button fx:id="mapaZooButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Mapa ZOO" translateX="10.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="planAktywnosciButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Plan Aktywności" translateX="20.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="zwierzetaButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="112.0" text="Zwierzęta" translateX="30.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="pracownicyButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" text="Pracownicy" translateX="40.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+      <Pane layoutX="21.0" layoutY="80.0" prefHeight="690.0" prefWidth="956.0">
+         <children>
+            <Button layoutX="875.0" layoutY="349.0" mnemonicParsing="false" text="&gt;" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="370.0" layoutY="40.0" prefHeight="35.0" prefWidth="215.0" text="Dzień + Data">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <TableView layoutX="140.0" layoutY="92.0" prefHeight="546.0" prefWidth="684.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <Button layoutX="66.0" layoutY="347.0" mnemonicParsing="false" text="&lt;" />
+            <Button layoutX="797.0" layoutY="5.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="112.0" text="Mój Plan">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
