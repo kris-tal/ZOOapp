@@ -1,4 +1,4 @@
 package app.zoo;
 
-public class PracownicyController {
+public class PracownicyController extends ToolBarController{
 }

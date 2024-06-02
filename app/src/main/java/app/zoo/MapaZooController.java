@@ -1,5 +1,6 @@
 package app.zoo;
 
-public class MapaZooController {
+
+public class MapaZooController extends ToolBarController{
 
 }

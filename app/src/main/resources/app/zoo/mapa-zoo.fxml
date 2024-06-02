@@ -32,7 +32,7 @@
             </Pane>
          </children>
       </HBox>
-      <ToolBar layoutY="-2.0" prefHeight="57.0" prefWidth="1000.0">
+      <ToolBar layoutY="-1.0" prefHeight="57.0" prefWidth="1000.0">
          <items>
             <Button fx:id="mapaZooButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Mapa ZOO" translateX="10.0">
                <font>

@@ -1,4 +1,4 @@
 package app.zoo;
 
-public class ZwierzetaController {
+public class ZwierzetaController extends ToolBarController{
 }
