@@ -3,6 +3,7 @@ package app.zoo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,9 @@ public class PlanAktywnosciController extends ToolBarController{
 
     @FXML
     private Button nextButton;
+
+    @FXML
+    private TableView mainTable;
 
     private LocalDate currentDate;
 
