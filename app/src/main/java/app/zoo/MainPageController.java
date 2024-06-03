@@ -15,9 +15,9 @@ public class MainPageController extends ToolBarController{
     private Label uprawnieniaLabel;
 
     public void updateUserDetails() {
-        idLabel.setText("ID: " + super.getUser().getID());
-        stanowiskoLabel.setText("Stanowisko: " + super.getUser().getRole());
-        uprawnieniaLabel.setText("Uprawnienia: " + super.getUser().getPermissions());
+        idLabel.setText("ID: " + super.getPracownik().getID());
+        stanowiskoLabel.setText("Stanowisko: " + super.getPracownik().getRole());
+        uprawnieniaLabel.setText("Uprawnienia: " + super.getPracownik().getPermissions());
     }
 }
 

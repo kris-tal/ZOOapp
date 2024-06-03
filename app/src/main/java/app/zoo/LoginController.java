@@ -34,12 +34,12 @@ public class LoginController {
         submitButton.setOnAction(event -> onLoginButtonClick());
     }
 
-    void openMainPage(User user) {
+    void openMainPage(Pracownik pracownik) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-page.fxml"));
             Parent root = fxmlLoader.load();
             MainPageController mainPageController = fxmlLoader.getController();
-            mainPageController.setUser(user);
+            mainPageController.setPracownik(pracownik);
             mainPageController.updateUserDetails();
             Stage currentStage = (Stage) submitButton.getScene().getWindow();
             currentStage.setScene(new Scene(root));
@@ -69,9 +69,7 @@ protected void onLoginButtonClick() {
         statement.setInt(1, userID);
         statement.setInt(2, password);
         ResultSet resultSet = statement.executeQuery();
-        User user = new User(String.valueOf(userID), "Pracownik");
-        openMainPage(user);
-        /*if (resultSet.next()) {
+        if (resultSet.next()) {
             Pracownik pracownik = new Pracownik(
                 resultSet.getInt("id"),
                 resultSet.getString("imie"),
@@ -79,11 +77,10 @@ protected void onLoginButtonClick() {
                 resultSet.getString("pesel"),
                 resultSet.getInt("haslo")
             );
-            User user = new User(String.valueOf(pracownik.getId()), pracownik.getImie());
-            openMainPage(user);
+            openMainPage(pracownik);
         } else {
             System.out.println("Invalid credentials");
-        }*/
+        }
     } catch (SQLException e) {
         e.printStackTrace();
     }

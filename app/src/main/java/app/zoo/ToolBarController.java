@@ -12,7 +12,7 @@ import app.zoo.database.Pracownik;
 
 public class ToolBarController {
     private Stage stage;
-    private User user;
+    private Pracownik pracownik;
 
     @FXML
     private Button mapaZooButton;
@@ -29,8 +29,8 @@ public class ToolBarController {
     @FXML
     private Button wylogujButton;
 
-    public void setUser(User user2) {
-        this.user = user2;
+    public void setPracownik(Pracownik pracownik2) {
+        this.pracownik = pracownik2;
     }
 
     @FXML
@@ -42,8 +42,8 @@ public class ToolBarController {
         wylogujButton.setOnAction(event -> openLogin());
     }
 
-    public User getUser() {
-        return this.user;
+    public Pracownik getPracownik() {
+        return this.pracownik;
     }
 
     private void loadScene(String fxml, Stage stage) {
@@ -78,7 +78,7 @@ public class ToolBarController {
 
     @FXML
     private void openLogin() {
-        user = null;
+        pracownik = null;
         loadScene("login.fxml", (Stage)wylogujButton.getScene().getWindow());
     }
 }
