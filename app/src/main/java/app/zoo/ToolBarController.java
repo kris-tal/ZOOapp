@@ -46,39 +46,28 @@ public class ToolBarController {
         return this.pracownik;
     }
 
-    private void loadScene(String fxml, Stage stage) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void openMapaZoo() {
-        loadScene("mapa-zoo.fxml", (Stage)mapaZooButton.getScene().getWindow());
+        SceneLoader.loadScene("mapa-zoo.fxml", (Stage)mapaZooButton.getScene().getWindow());
     }
 
     @FXML
     private void openPlanAktywnosci() {
-        loadScene("plan-aktywnosci.fxml", (Stage)planAktywnosciButton.getScene().getWindow());
+        SceneLoader.loadScene("plan-aktywnosci.fxml", (Stage)planAktywnosciButton.getScene().getWindow());
     }
 
     @FXML
     private void openZwierzeta() {
-        loadScene("zwierzeta.fxml", (Stage)zwierzetaButton.getScene().getWindow());
+        SceneLoader.loadScene("zwierzeta.fxml", (Stage)zwierzetaButton.getScene().getWindow());
     }
 
     @FXML
     private void openPracownicy() {
-        loadScene("pracownicy.fxml", (Stage)pracownicyButton.getScene().getWindow());
+        SceneLoader.loadScene("pracownicy.fxml", (Stage)pracownicyButton.getScene().getWindow());
     }
 
-    @FXML
     private void openLogin() {
         pracownik = null;
-        loadScene("login.fxml", (Stage)wylogujButton.getScene().getWindow());
+        SceneLoader.loadScene("login.fxml", (Stage)wylogujButton.getScene().getWindow());
     }
 }

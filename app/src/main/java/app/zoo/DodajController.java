@@ -3,6 +3,7 @@ package app.zoo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class DodajController extends ToolBarController {
     @FXML
@@ -40,5 +41,10 @@ public class DodajController extends ToolBarController {
 
     @FXML
     private Label label6;
+
+    static public void openDodaj(Stage stage) {
+        SceneLoader.loadScene("mapa-zoo.fxml", stage);
+    }
+
 
 }
