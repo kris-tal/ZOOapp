@@ -9,6 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import app.zoo.database.MyController;
+import app.zoo.database.PsqlManager;
 
 public class LoginController {
     @FXML
@@ -36,21 +43,35 @@ public class LoginController {
         }
     }
 
-    private String userID;
+    private int userID;
     private int password;
-
+    
     @FXML
     protected void onLoginButtonClick() {
         System.out.println("Username: " + loginField.getText());
-        userID = loginField.getText();
+        try {
+            userID = Integer.parseInt(loginField.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid user ID");
+            return;
+        }
         System.out.println("Password: " + passwordField.getText());
         password = passwordField.getText().hashCode();
         System.out.println("Hashed password: " + password);
-        if(true) {
+        try (Connection connection = PsqlManager.getConnection()) {
+            String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userID);
+            statement.setInt(2, password);
+            ResultSet resultSet = statement.executeQuery();
             openMainPage();
-        }
-        else {
-            System.out.println("Invalid credentials");
+            /*if (resultSet.next()) {
+                openMainPage();
+            } else {
+                System.out.println("Invalid credentials");
+            }*/
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
