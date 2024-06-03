@@ -52,37 +52,31 @@ public class LoginController {
     private int password;
     
     @FXML
-protected void onLoginButtonClick() {
-    System.out.println("Username: " + loginField.getText());
-    try {
-        userID = Integer.parseInt(loginField.getText());
-    } catch (NumberFormatException e) {
-        System.out.println("Invalid user ID");
-        return;
-    }
-    System.out.println("Password: " + passwordField.getText());
-    password = passwordField.getText().hashCode();
-    System.out.println("Hashed password: " + password);
-    try (Connection connection = PsqlManager.getConnection()) {
-        String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, userID);
-        statement.setInt(2, password);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            Pracownik pracownik = new Pracownik(
-                resultSet.getInt("id"),
-                resultSet.getString("imie"),
-                resultSet.getString("nazwisko"),
-                resultSet.getString("pesel"),
-                resultSet.getInt("haslo")
-            );
-            openMainPage(pracownik);
-        } else {
-            System.out.println("Invalid credentials");
+    protected void onLoginButtonClick() {
+        System.out.println("Username: " + loginField.getText());
+        try {
+            userID = Integer.parseInt(loginField.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid user ID");
+            return;
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        System.out.println("Password: " + passwordField.getText());
+        password = HashHelper.hashPassword(passwordField.getText());
+        System.out.println("Hashed password: " + password);
+        try (Connection connection = PsqlManager.getConnection()) {
+            String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userID);
+            statement.setInt(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            openMainPage();
+            /*if (resultSet.next()) {
+                openMainPage();
+            } else {
+                System.out.println("Invalid credentials");
+            }*/
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
 }
