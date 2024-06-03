@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 import app.zoo.database.MyController;
 import app.zoo.database.PsqlManager;
+import app.zoo.database.Pracownik;
 
 public class LoginController {
     @FXML
@@ -33,7 +34,7 @@ public class LoginController {
         submitButton.setOnAction(event -> onLoginButtonClick());
     }
 
-    void openMainPage() {
+    void openMainPage(User user) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-page.fxml"));
             Parent root = fxmlLoader.load();
@@ -46,7 +47,7 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-    private User user;
+
     private int userID;
     private int password;
     
@@ -68,8 +69,8 @@ public class LoginController {
             statement.setInt(1, userID);
             statement.setInt(2, password);
             ResultSet resultSet = statement.executeQuery();
-            user = new User(userID, "zarządca");
-            openMainPage();
+            User user = new User(userID, "Pracownik");
+            openMainPage(user);
             /*if (resultSet.next()) {
                 openMainPage();
             } else {

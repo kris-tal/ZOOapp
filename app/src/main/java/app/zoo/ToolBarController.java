@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import app.zoo.database.Pracownik;
+
 public class ToolBarController {
     private Stage stage;
     private User user;
@@ -27,8 +29,8 @@ public class ToolBarController {
     @FXML
     private Button wylogujButton;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User user2) {
+        this.user = user2;
     }
 
     @FXML
