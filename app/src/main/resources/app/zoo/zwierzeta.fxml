@@ -41,11 +41,13 @@
       </ToolBar>
       <Pane layoutX="20.0" layoutY="83.0" prefHeight="681.0" prefWidth="959.0">
          <children>
-            <TableView fx:id="mainTable" layoutX="44.0" layoutY="69.0" prefHeight="587.0" prefWidth="877.0">
-               <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-               </columns>
+            <TableView fx:id="zwierzetaTable" layoutX="44.0" layoutY="69.0" prefHeight="587.0" prefWidth="877.0">
+                <columns>
+                    <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                    <TableColumn fx:id="gatunekColumn" prefWidth="75.0" text="Gatunek" />
+                    <TableColumn fx:id="imieColumn" prefWidth="75.0" text="Imię" />
+                    <TableColumn fx:id="poziomUmiejetnosciColumn" prefWidth="75.0" text="Poziom umiejętności" />
+                </columns>
             </TableView>
             <Button layoutX="577.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj" />
             <Button layoutX="692.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj" />
