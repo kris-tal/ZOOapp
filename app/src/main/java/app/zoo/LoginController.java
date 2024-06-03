@@ -34,12 +34,12 @@ public class LoginController {
         submitButton.setOnAction(event -> onLoginButtonClick());
     }
 
-    void openMainPage(User user) {
+    void openMainPage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-page.fxml"));
             Parent root = fxmlLoader.load();
             MainPageController mainPageController = fxmlLoader.getController();
-            mainPageController.setUser(user);
+            //mainPageController.setUser();
             mainPageController.updateUserDetails();
             Stage currentStage = (Stage) submitButton.getScene().getWindow();
             currentStage.setScene(new Scene(root));
@@ -69,8 +69,7 @@ public class LoginController {
             statement.setInt(1, userID);
             statement.setInt(2, password);
             ResultSet resultSet = statement.executeQuery();
-            User user = new User(userID, "Pracownik");
-            openMainPage(user);
+            openMainPage();
             /*if (resultSet.next()) {
                 openMainPage();
             } else {
