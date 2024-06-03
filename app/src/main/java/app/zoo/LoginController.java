@@ -61,7 +61,7 @@ public class LoginController {
             return;
         }
         System.out.println("Password: " + passwordField.getText());
-        password = passwordField.getText().hashCode();
+        password = HashHelper.hashPassword(passwordField.getText());
         System.out.println("Hashed password: " + password);
         try (Connection connection = PsqlManager.getConnection()) {
             String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
