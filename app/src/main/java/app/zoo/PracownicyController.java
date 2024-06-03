@@ -31,6 +31,7 @@ public class PracownicyController extends ToolBarController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
         nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));

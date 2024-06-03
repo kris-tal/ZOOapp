@@ -50,6 +50,7 @@ public class ZwierzetaController extends ToolBarController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         gatunekColumn.setCellValueFactory(new PropertyValueFactory<>("gatunek"));
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));

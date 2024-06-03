@@ -53,6 +53,7 @@ public class LoginController {
     
     @FXML
     protected void onLoginButtonClick() {
+        System.out.println(HashHelper.hashPassword("slayer123"));
         System.out.println("Username: " + loginField.getText());
         try {
             userID = Integer.parseInt(loginField.getText());
