@@ -1,17 +1,17 @@
 package app.zoo;
 
 public class User {
-    private String userID;
+    private int userID;
     private String role;
     private boolean permissions;
 
-    public User(String userID, String role) {
+    public User(int userID, String role) {
         this.userID = userID;
         this.role = role;
         this.permissions = role.equals("zarządca");
     }
 
-    public String getID() {
+    public int getID() {
         return userID;
     }
 

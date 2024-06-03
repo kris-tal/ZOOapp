@@ -46,7 +46,7 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
+    private User user;
     private int userID;
     private int password;
     
@@ -68,6 +68,7 @@ public class LoginController {
             statement.setInt(1, userID);
             statement.setInt(2, password);
             ResultSet resultSet = statement.executeQuery();
+            user = new User(userID, "zarządca");
             openMainPage();
             /*if (resultSet.next()) {
                 openMainPage();
