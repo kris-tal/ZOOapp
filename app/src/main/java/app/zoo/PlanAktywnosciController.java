@@ -22,7 +22,7 @@ import java.sql.Statement;
 import app.zoo.database.PlanDniaRecord;
 import app.zoo.database.PsqlManager;
 
-public class PlanAktywnosciController extends ToolBarController{
+public class PlanAktywnosciController extends ToolBarController {
 
     @FXML
     private Label dataLabel;

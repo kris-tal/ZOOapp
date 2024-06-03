@@ -1,14 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.zoo.DodajController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.zoo.DodajController">
+   <children>
+      <ToolBar prefHeight="57.0" prefWidth="1000.0">
+         <items>
+            <Button fx:id="mapaZooButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Mapa ZOO" translateX="10.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="planAktywnosciButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Plan Aktywności" translateX="20.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="zwierzetaButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="112.0" text="Zwierzęta" translateX="30.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="pracownicyButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" text="Pracownicy" translateX="40.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="wylogujButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" text="Wyloguj" translateX="345.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+      <ComboBox layoutX="490.0" layoutY="116.0" prefHeight="30.0" prefWidth="187.0" promptText="Tabela" />
+      <VBox layoutX="309.0" layoutY="191.0" prefHeight="484.0" prefWidth="552.0">
+         <children>
+            <TextField fx:id="pole1" prefHeight="30.0" prefWidth="715.0" promptText="Pole 1">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="pole2" prefHeight="30.0" prefWidth="431.0" promptText="Pole 2">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="pole3" prefHeight="30.0" prefWidth="431.0" promptText="Pole 3">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="pole4" prefHeight="30.0" prefWidth="431.0" promptText="Pole 4">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="pole5" prefHeight="30.0" prefWidth="431.0" promptText="Pole 5">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="pole6" prefHeight="30.0" prefWidth="431.0" promptText="Pole 6" />
+         </children>
+      </VBox>
+      <Button fx:id="dodajButton" layoutX="564.0" layoutY="714.0" mnemonicParsing="false" text="Dodaj">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <VBox layoutX="117.0" layoutY="184.0" prefHeight="488.0" prefWidth="168.0">
+         <children>
+            <Label fx:id="label1" prefHeight="31.0" prefWidth="185.0" text="Label 1">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label2" prefHeight="32.0" prefWidth="312.0" text="Label 2">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label3" prefHeight="32.0" prefWidth="250.0" text="Label 3">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label4" prefHeight="32.0" prefWidth="256.0" text="Label 4">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label5" prefHeight="32.0" prefWidth="244.0" text="Label 5">
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label6" prefHeight="32.0" prefWidth="201.0" text="Label 6">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

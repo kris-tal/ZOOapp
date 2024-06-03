@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class DodajController extends ToolBarController {
+public class EdytujController extends ToolBarController {
     @FXML
     private TextField pole1;
 
@@ -40,5 +40,4 @@ public class DodajController extends ToolBarController {
 
     @FXML
     private Label label6;
-
 }
