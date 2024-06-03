@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 import app.zoo.database.MyController;
 import app.zoo.database.PsqlManager;
+import app.zoo.services.Find;
 import app.zoo.database.Pracownik;
 
 public class LoginController {
@@ -63,19 +64,13 @@ public class LoginController {
         System.out.println("Password: " + passwordField.getText());
         password = HashHelper.hashPassword(passwordField.getText());
         System.out.println("Hashed password: " + password);
-        try (Connection connection = PsqlManager.getConnection()) {
-            String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userID);
-            statement.setInt(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            openMainPage();
-            /*if (resultSet.next()) {
-                openMainPage();
+        try {
+            if(Find.findEmployeeByUserIDAndPassword(userID, password) != null) {
+                openMainPage(Find.findEmployeeByUserIDAndPassword(userID, password));
             } else {
                 System.out.println("Invalid credentials");
-            }*/
-        } catch (SQLException e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
