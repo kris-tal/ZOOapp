@@ -2,6 +2,7 @@ package app.zoo;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -35,9 +36,12 @@ public class LoginController {
     void openMainPage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-page.fxml"));
-            Scene secondScene = new Scene(fxmlLoader.load());
+            Parent root = fxmlLoader.load();
+            MainPageController mainPageController = fxmlLoader.getController();
+            mainPageController.setUser(user);
+            mainPageController.updateUserDetails();
             Stage currentStage = (Stage) submitButton.getScene().getWindow();
-            currentStage.setScene(secondScene);
+            currentStage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }

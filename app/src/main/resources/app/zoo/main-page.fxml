@@ -31,21 +31,26 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <Button fx:id="wylogujButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" text="Wyloguj" translateX="345.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
         </items>
       </ToolBar>
       <Pane layoutX="247.0" layoutY="200.0" prefHeight="441.0" prefWidth="505.0">
          <children>
-            <Label layoutX="28.0" layoutY="133.0" prefHeight="49.0" prefWidth="240.0" text="ID:" textFill="#8a8a8a">
+            <Label fx:id="idLabel" layoutX="25.0" layoutY="133.0" prefHeight="49.0" prefWidth="465.0" text="ID:" textFill="#8a8a8a">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="25.0" layoutY="185.0" prefHeight="49.0" prefWidth="240.0" text="Stanowisko: " textFill="#8a8a8a">
+            <Label fx:id="stanowiskoLabel" layoutX="25.0" layoutY="185.0" prefHeight="49.0" prefWidth="481.0" text="Stanowisko: " textFill="#8a8a8a">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="25.0" layoutY="235.0" prefHeight="49.0" prefWidth="414.0" text="Uprawnienia do zmian:" textFill="#8a8a8a">
+            <Label fx:id="uprawnieniaLabel" layoutX="25.0" layoutY="235.0" prefHeight="49.0" prefWidth="481.0" text="Uprawnienia do zmian:" textFill="#8a8a8a">
                <font>
                   <Font size="30.0" />
                </font>

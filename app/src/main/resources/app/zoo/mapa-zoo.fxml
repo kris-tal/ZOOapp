@@ -54,6 +54,11 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <Button fx:id="wylogujButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" text="Wyloguj" translateX="345.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
          </items>
       </ToolBar>
    </children>

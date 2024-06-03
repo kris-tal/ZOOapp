@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class ToolBarController {
     private Stage stage;
+    private User user;
 
     @FXML
     private Button mapaZooButton;
@@ -24,11 +25,23 @@ public class ToolBarController {
     private Button pracownicyButton;
 
     @FXML
+    private Button wylogujButton;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @FXML
     public void initialize() {
         mapaZooButton.setOnAction(event -> openMapaZoo());
         planAktywnosciButton.setOnAction(event -> openPlanAktywnosci());
         zwierzetaButton.setOnAction(event -> openZwierzeta());
         pracownicyButton.setOnAction(event -> openPracownicy());
+        wylogujButton.setOnAction(event -> openLogin());
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     private void loadScene(String fxml, Stage stage) {
@@ -59,5 +72,11 @@ public class ToolBarController {
     @FXML
     private void openPracownicy() {
         loadScene("pracownicy.fxml", (Stage)pracownicyButton.getScene().getWindow());
+    }
+
+    @FXML
+    private void openLogin() {
+        user = null;
+        loadScene("login.fxml", (Stage)wylogujButton.getScene().getWindow());
     }
 }
