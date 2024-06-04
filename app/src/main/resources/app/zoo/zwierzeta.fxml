@@ -49,9 +49,9 @@
                     <TableColumn fx:id="poziomUmiejetnosciColumn" prefWidth="75.0" text="Poziom umiejętności" />
                 </columns>
             </TableView>
-            <Button layoutX="577.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj" />
-            <Button layoutX="692.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj" />
-            <Button layoutX="805.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń" />
+            <Button fx:id="dodajButton" layoutX="577.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj" />
+            <Button fx:id="edytujButton" layoutX="692.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj" />
+            <Button fx:id="usunButton" layoutX="805.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń" />
          </children>
       </Pane>
    </children>

@@ -21,26 +21,48 @@ import java.sql.Statement;
 
 import app.zoo.database.PlanDniaRecord;
 import app.zoo.database.PsqlManager;
+import javafx.stage.Stage;
 
 public class PlanAktywnosciController extends ToolBarController {
 
     @FXML
     private Label dataLabel;
-
     @FXML
     private Button prevButton;
-
     @FXML
     private Button nextButton;
-
     @FXML
     private TableView<PlanDniaRecord> tableView;
     @FXML
     private TableColumn<PlanDniaRecord, Integer> idColumn;
     @FXML
     private TableColumn<PlanDniaRecord, LocalDate> dataColumn;
+    @FXML
+    private Button dodajButton;
+    @FXML
+    private Button edytujButton;
+    @FXML
+    private Button usunButton;
 
     private LocalDate currentDate;
+
+    @FXML
+    public void openDodaj() {
+        try {
+            SceneLoader.loadScene("dodaj.fxml", new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openEdytuj() {
+        try {
+            SceneLoader.loadScene("edytuj.fxml", new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initialize() {
         super.initialize();
@@ -62,6 +84,9 @@ public class PlanAktywnosciController extends ToolBarController {
             currentDate = currentDate.plusDays(1);
             updateDateLabel();
         });
+
+        dodajButton.setOnAction(event -> openDodaj());
+        edytujButton.setOnAction(event -> openEdytuj());
     
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);

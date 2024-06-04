@@ -34,16 +34,25 @@ public class ZwierzetaController extends ToolBarController {
     private TableColumn<Zwierze, Integer> poziomUmiejetnosciColumn;
     @FXML
     private Button dodajButton;
+    @FXML
+    private Button edytujButton;
+    @FXML
+    private Button usunButton;
 
     @FXML
-    public void onDodajButtonClick() {
+    public void openDodaj() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DodajZwierze.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
+            SceneLoader.loadScene("dodaj.fxml", new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openEdytuj() {
+        try {
+            SceneLoader.loadScene("edytuj.fxml", new Stage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -73,5 +82,8 @@ public class ZwierzetaController extends ToolBarController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        dodajButton.setOnAction(event -> openDodaj());
+        edytujButton.setOnAction(event -> openEdytuj());
+
     }
 }

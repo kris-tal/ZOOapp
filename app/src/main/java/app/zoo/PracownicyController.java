@@ -1,6 +1,7 @@
 package app.zoo;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import app.zoo.database.PsqlManager;
 import app.zoo.database.Pracownik;
+import javafx.stage.Stage;
 
 public class PracownicyController extends ToolBarController {
     @FXML
@@ -28,6 +30,30 @@ public class PracownicyController extends ToolBarController {
     private TableColumn<Pracownik, String> peselColumn;
     @FXML
     private TableColumn<Pracownik, Integer> hasloColumn;
+    @FXML
+    private Button dodajButton;
+    @FXML
+    private Button edytujButton;
+    @FXML
+    private Button usunButton;
+
+    @FXML
+    public void openDodaj() {
+        try {
+            SceneLoader.loadScene("dodaj.fxml", new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openEdytuj() {
+        try {
+            SceneLoader.loadScene("edytuj.fxml", new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void initialize() {
@@ -56,5 +82,7 @@ public class PracownicyController extends ToolBarController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        dodajButton.setOnAction(event -> openDodaj());
+        edytujButton.setOnAction(event -> openEdytuj());
     }
 }

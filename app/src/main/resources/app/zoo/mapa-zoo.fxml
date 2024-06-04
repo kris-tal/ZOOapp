@@ -61,17 +61,17 @@
             </Button>
          </items>
       </ToolBar>
-      <Button layoutX="572.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj">
+      <Button fx:id="dodajButton" layoutX="572.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="687.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj">
+      <Button fx:id="edytujButton" layoutX="687.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="800.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń">
+      <Button fx:id="usunButton" layoutX="800.0" layoutY="703.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń">
          <font>
             <Font size="16.0" />
          </font>
