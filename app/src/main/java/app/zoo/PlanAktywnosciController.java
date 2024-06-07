@@ -69,24 +69,26 @@ public class PlanAktywnosciController extends ToolBarController {
         currentDate = LocalDate.now();
         updateDateLabel();
     
-        // Set cell value factories
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
-        // Add similar lines for other TableColumn objects
     
         prevButton.setOnAction(event -> {
-            if (currentDate.isAfter(LocalDate.now())) {
+            if (currentDate.isAfter(LocalDate.now().minusDays(1))) { 
                 currentDate = currentDate.minusDays(1);
                 updateDateLabel();
+                displayPlanDniaRecords(); 
             }
         });
         nextButton.setOnAction(event -> {
             currentDate = currentDate.plusDays(1);
             updateDateLabel();
+            displayPlanDniaRecords(); 
         });
 
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
+
+        displayPlanDniaRecords(); 
     
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);
@@ -97,6 +99,7 @@ public class PlanAktywnosciController extends ToolBarController {
     private void displayPlanDniaRecords() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedCurrentDate = currentDate.format(formatter);
+        System.out.println(formattedCurrentDate);
         String query = "SELECT * FROM plan_dnia WHERE data = '" + formattedCurrentDate + "'";
         System.out.println(query);
         ObservableList<PlanDniaRecord> data = FXCollections.observableArrayList();
@@ -120,7 +123,8 @@ public class PlanAktywnosciController extends ToolBarController {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    
+
+        tableView.setItems(null); 
         tableView.setItems(data);
     }
 
