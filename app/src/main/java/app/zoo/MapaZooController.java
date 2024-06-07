@@ -31,11 +31,17 @@ public class MapaZooController extends ToolBarController{
         }
     }
 
+    @FXML
+    public void usunKrotke() {  //tu jako argument bedzie jakas krotka cze cos
+        //usuniecie krotki z bazy danych
+    }
+
     @Override
     public void initialize() {
         super.initialize();
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
+        usunButton.setOnAction(event -> usunKrotke());
 
     }
 }
