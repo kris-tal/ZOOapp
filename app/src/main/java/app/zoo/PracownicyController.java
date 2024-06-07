@@ -37,23 +37,6 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private Button usunButton;
 
-    @FXML
-    public void openDodaj() {
-        try {
-            SceneLoader.loadScene("dodaj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void openEdytuj() {
-        try {
-            SceneLoader.loadScene("edytuj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     public void initialize() {
@@ -82,7 +65,8 @@ public class PracownicyController extends ToolBarController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        dodajButton.setOnAction(event -> openDodaj());
-        edytujButton.setOnAction(event -> openEdytuj());
+
+        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
+        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
     }
 }

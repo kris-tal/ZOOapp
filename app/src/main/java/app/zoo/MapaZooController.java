@@ -14,24 +14,6 @@ public class MapaZooController extends ToolBarController{
     private Button usunButton;
 
     @FXML
-    public void openDodaj() {
-        try {
-            SceneLoader.loadScene("dodaj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void openEdytuj() {
-        try {
-            SceneLoader.loadScene("edytuj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     public void usunKrotke() {  //tu jako argument bedzie jakas krotka cze cos
         //usuniecie krotki z bazy danych
     }
@@ -39,8 +21,8 @@ public class MapaZooController extends ToolBarController{
     @Override
     public void initialize() {
         super.initialize();
-        dodajButton.setOnAction(event -> openDodaj());
-        edytujButton.setOnAction(event -> openEdytuj());
+        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
+        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
         usunButton.setOnAction(event -> usunKrotke());
 
     }

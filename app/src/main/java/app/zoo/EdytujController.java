@@ -3,6 +3,7 @@ package app.zoo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class EdytujController extends ToolBarController {
     @FXML
@@ -40,4 +41,9 @@ public class EdytujController extends ToolBarController {
 
     @FXML
     private Label label6;
+
+    @FXML
+    static public void openEdytuj(Stage stage) {
+        SceneLoader.loadScene("edytuj.fxml", stage);
+    }
 }
