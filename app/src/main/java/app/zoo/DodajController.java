@@ -43,7 +43,7 @@ public class DodajController extends ToolBarController {
     private Label label6;
 
     static public void openDodaj(Stage stage) {
-        SceneLoader.loadScene("mapa-zoo.fxml", stage);
+        SceneLoader.loadScene("dodaj.fxml", stage);
     }
 
 
