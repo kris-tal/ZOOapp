@@ -88,14 +88,17 @@ public class PlanAktywnosciController extends ToolBarController {
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
     
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy", new Locale("pl", "PL"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);
         dataLabel.setText(formattedDate);
         displayPlanDniaRecords();
     }
 
     private void displayPlanDniaRecords() {
-        String query = "SELECT * FROM plan_dnia WHERE data = '" + currentDate + "'";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedCurrentDate = currentDate.format(formatter);
+        String query = "SELECT * FROM plan_dnia WHERE data = '" + formattedCurrentDate + "'";
+        System.out.println(query);
         ObservableList<PlanDniaRecord> data = FXCollections.observableArrayList();
     
         try (Connection conn = PsqlManager.getConnection();
@@ -122,7 +125,7 @@ public class PlanAktywnosciController extends ToolBarController {
     }
 
     private void updateDateLabel() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy", new Locale("pl", "PL"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);
         dataLabel.setText(formattedDate);
 

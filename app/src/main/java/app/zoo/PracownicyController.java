@@ -66,7 +66,7 @@ public class PracownicyController extends ToolBarController {
 
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM pracownicy");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM pracownicy LIMIT 50");
 
             List<Pracownik> pracownicy = new ArrayList<>();
             while (resultSet.next()) {
