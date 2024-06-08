@@ -21,7 +21,7 @@ public class UsunController {
         potwierdzButton.setOnAction(event -> usunKrotke());
     }
 
-//    static public void openUsun(//tutaj dodaj) {
-//        //SceneLoader.loadScene("usun.fxml", new Stage());
-//    }
+    static public void openUsun(//tutaj dodaj) {
+        //SceneLoader.loadScene("usun.fxml", new Stage());
+    }
 }

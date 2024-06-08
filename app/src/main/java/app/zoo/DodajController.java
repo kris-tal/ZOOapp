@@ -11,9 +11,9 @@ import app.zoo.database.PsqlManager;
 
 public class DodajController extends ToolBarController {
     @FXML
-    private TextField pole1, pole2, pole3, pole4, pole5, pole6;
+    private TextField pole1, pole2, pole3, pole4, pole5, pole6, pole7;
     @FXML
-    private Label label1, label2, label3, label4, label5, label6;
+    private Label label1, label2, label3, label4, label5, label6, label7;
     @FXML
     private CheckBox iloscCheckBox;
     @FXML
@@ -37,8 +37,8 @@ public class DodajController extends ToolBarController {
     private void setupUI() {
         iloscCheckBox.setDisable(true);
         iloscTextField.setDisable(true);
-        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
-        Label[] etykiety = {label1, label2, label3, label4, label5, label6};
+        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6, pole7};
+        Label[] etykiety = {label1, label2, label3, label4, label5, label6, label7};
 
         for (TextField pole : pola) {
             pole.setDisable(true);
