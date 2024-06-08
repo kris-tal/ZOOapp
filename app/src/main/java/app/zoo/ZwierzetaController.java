@@ -48,6 +48,8 @@ public class ZwierzetaController extends ToolBarController {
     @FXML
     private Button nextButton;
 
+    int currentPage = 0;
+
     @FXML
     public void openDodaj() {
         try {
@@ -97,14 +99,14 @@ public class ZwierzetaController extends ToolBarController {
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+                zwierzetaTable.getItems().setAll(updateTable(currentPage * 30));
             }
             if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
             prevButton.setDisable(false);
             currentPage++;
-            mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+            zwierzetaTable.getItems().setAll(updateTable(currentPage * 30));
         });
 
     }
