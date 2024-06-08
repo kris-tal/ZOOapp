@@ -59,6 +59,9 @@ public class PlanAktywnosciController extends ToolBarController {
 
     private LocalDate currentDate;
 
+    private String mojPlanOption;
+    private boolean mojPlan;
+
     @FXML
     public void openDodaj() {
         try {
@@ -81,6 +84,9 @@ public class PlanAktywnosciController extends ToolBarController {
         super.initialize();
         currentDate = LocalDate.now();
         updateDateLabel();
+        mojPlanOption = "";
+        mojPlan = false;
+
     
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
@@ -94,17 +100,27 @@ public class PlanAktywnosciController extends ToolBarController {
             if (currentDate.isAfter(LocalDate.now().minusDays(1))) { 
                 currentDate = currentDate.minusDays(1);
                 updateDateLabel();
-                displayPlanDniaRecords(""); 
+                displayPlanDniaRecords(mojPlanOption);
             }
         });
         nextButton.setOnAction(event -> {
             currentDate = currentDate.plusDays(1);
             updateDateLabel();
-            displayPlanDniaRecords(""); 
+            displayPlanDniaRecords(mojPlanOption);
         });
         
         mojPlanButton.setOnAction(event -> {
-            displayPlanDniaRecords(" AND (" + Pracownik.getID() + " = id_sprzatacza" + " OR " + Pracownik.getID() + " = id_karmienia" + " OR " + Pracownik.getID() + " = id_popisu)");
+            if(mojPlan) {
+                mojPlan = false;
+                mojPlanButton.setText("Cały plan");
+                mojPlanOption = "";
+                displayPlanDniaRecords(mojPlanOption);
+                return;
+            }
+            mojPlan = true;
+            mojPlanButton.setText("Mój plan");
+            mojPlanOption = " AND (" + Pracownik.getID() + " = id_sprzatacza" + " OR " + Pracownik.getID() + " = id_karmienia" + " OR " + Pracownik.getID() + " = id_popisu)";
+            displayPlanDniaRecords(mojPlanOption);
         });
 
         dodajButton.setOnAction(event -> openDodaj());
@@ -115,7 +131,7 @@ public class PlanAktywnosciController extends ToolBarController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);
         dataLabel.setText(formattedDate);
-        displayPlanDniaRecords("");
+        displayPlanDniaRecords(mojPlanOption);
     }
 
     private void displayPlanDniaRecords(String s) {
