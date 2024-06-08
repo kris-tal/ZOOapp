@@ -6,14 +6,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import app.zoo.database.PsqlManager;
 import app.zoo.database.PracownicyPolaczenie;
 import app.zoo.database.Pracownik;
 import javafx.stage.Stage;

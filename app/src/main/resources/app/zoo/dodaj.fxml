@@ -127,7 +127,7 @@
             </Label>
          </children>
       </VBox>
-      <CheckBox fx:id="ilocCheckBox" layoutX="649.0" layoutY="717.0" mnemonicParsing="false" text="Dodaj wiele">
+      <CheckBox fx:id="iloscCheckBox" layoutX="649.0" layoutY="717.0" mnemonicParsing="false" text="Dodaj wiele">
          <font>
             <Font size="16.0" />
          </font>
