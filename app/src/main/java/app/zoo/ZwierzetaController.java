@@ -21,6 +21,7 @@ import java.util.List;
 
 import app.zoo.database.PsqlManager;
 import app.zoo.database.Zwierze;
+import app.zoo.database.ZwierzePolaczenie;
 
 public class ZwierzetaController extends ToolBarController {
     @FXML
@@ -76,37 +77,19 @@ public class ZwierzetaController extends ToolBarController {
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
         poziomUmiejetnosciColumn.setCellValueFactory(new PropertyValueFactory<>("poziomUmiejetnosci"));
         nazwaGatunkuColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaGatunku"));
-
-        try (Connection connection = PsqlManager.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM zwierzeta limit 10;");
-
-            List<Zwierze> zwierzeta = new ArrayList<>();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int gatunek = resultSet.getInt("gatunek");
-                String imie = resultSet.getString("imie");
-                int poziomUmiejetnosci = resultSet.getInt("poziom_umiejetnosci");
-                zwierzeta.add(new Zwierze(id, gatunek, imie, poziomUmiejetnosci));
-            }
-
-            zwierzetaTable.getItems().setAll(zwierzeta);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                zwierzetaTable.getItems().setAll(updateTable(currentPage * 30));
+                zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 20));
             }
             if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
             prevButton.setDisable(false);
             currentPage++;
-            zwierzetaTable.getItems().setAll(updateTable(currentPage * 30));
+            zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 20));
         });
 
     }
