@@ -52,10 +52,15 @@
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
                     <TableColumn fx:id="dataColumn" prefWidth="75.0" text="Data" />
+                    <TableColumn fx:id="godzinaOdColumn" prefWidth="100.0" text="Godzina Od" />
+                    <TableColumn fx:id="godzinaDoColumn" prefWidth="100.0" text="Godzina Do" />
+                    <TableColumn fx:id="idSprzataczaColumn" prefWidth="90.0" text="ID Sprzątacza" />
+                    <TableColumn fx:id="idKarmieniaColumn" prefWidth="90.0" text="ID Karmienia" />
+                    <TableColumn fx:id="idPopisuColumn" prefWidth="90.0" text="ID Popisu" />
                 </columns>
             </TableView>
             <Button fx:id="prevButton" layoutX="66.0" layoutY="347.0" mnemonicParsing="false" text="&lt;" />
-            <Button layoutX="40.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Mój Plan">
+            <Button fx:id="mojPlanButton" text="Mój Plan" layoutX="40.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" />
                <font>
                   <Font size="16.0" />
                </font>

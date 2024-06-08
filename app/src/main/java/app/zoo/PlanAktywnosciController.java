@@ -20,6 +20,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 import app.zoo.database.PlanDniaRecord;
+import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
 import javafx.stage.Stage;
 
@@ -38,6 +39,16 @@ public class PlanAktywnosciController extends ToolBarController {
     @FXML
     private TableColumn<PlanDniaRecord, LocalDate> dataColumn;
     @FXML
+    private TableColumn<PlanDniaRecord, Time> godzinaOdColumn;
+    @FXML
+    private TableColumn<PlanDniaRecord, Time> godzinaDoColumn;
+    @FXML
+    private TableColumn<PlanDniaRecord, Integer> idSprzataczaColumn;
+    @FXML
+    private TableColumn<PlanDniaRecord, Integer> idKarmieniaColumn;
+    @FXML
+    private TableColumn<PlanDniaRecord, Integer> idPopisuColumn;
+    @FXML
     private Button dodajButton;
     @FXML
     private Button edytujButton;
@@ -45,6 +56,9 @@ public class PlanAktywnosciController extends ToolBarController {
     private Button usunButton;
 
     private LocalDate currentDate;
+
+    @FXML
+    private Button mojPlanButton;
 
     @FXML
     public void openDodaj() {
@@ -71,36 +85,45 @@ public class PlanAktywnosciController extends ToolBarController {
     
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        godzinaOdColumn.setCellValueFactory(new PropertyValueFactory<>("godzinaOd"));
+        godzinaDoColumn.setCellValueFactory(new PropertyValueFactory<>("godzinaDo"));
+        idSprzataczaColumn.setCellValueFactory(new PropertyValueFactory<>("idSprzatacza"));
+        idKarmieniaColumn.setCellValueFactory(new PropertyValueFactory<>("idKarmienia"));
+        idPopisuColumn.setCellValueFactory(new PropertyValueFactory<>("idPopisu"));
     
         prevButton.setOnAction(event -> {
             if (currentDate.isAfter(LocalDate.now().minusDays(1))) { 
                 currentDate = currentDate.minusDays(1);
                 updateDateLabel();
-                displayPlanDniaRecords(); 
+                displayPlanDniaRecords(""); 
             }
         });
         nextButton.setOnAction(event -> {
             currentDate = currentDate.plusDays(1);
             updateDateLabel();
-            displayPlanDniaRecords(); 
+            displayPlanDniaRecords(""); 
+        });
+        
+        mojPlanButton.setOnAction(event -> {
+            displayPlanDniaRecords(" AND (" + Pracownik.getID() + " = id_sprzatacza" + " OR " + Pracownik.getID() + " = id_karmienia" + " OR " + Pracownik.getID() + " = id_popisu)");
         });
 
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
 
-        displayPlanDniaRecords(); 
+        
     
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);
         dataLabel.setText(formattedDate);
-        displayPlanDniaRecords();
+        displayPlanDniaRecords("");
     }
 
-    private void displayPlanDniaRecords() {
+    private void displayPlanDniaRecords(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedCurrentDate = currentDate.format(formatter);
         System.out.println(formattedCurrentDate);
-        String query = "SELECT * FROM plan_dnia WHERE data = '" + formattedCurrentDate + "'";
+        String query = "SELECT * FROM plan_dnia WHERE data = '" + formattedCurrentDate + "'" + s + ";";
         System.out.println(query);
         ObservableList<PlanDniaRecord> data = FXCollections.observableArrayList();
     
@@ -113,9 +136,9 @@ public class PlanAktywnosciController extends ToolBarController {
                 LocalDate date = rs.getDate("data").toLocalDate();
                 Time godzina_od = rs.getTime("godzina_od");
                 Time godzina_do = rs.getTime("godzina_do");
-                Integer id_sprzatacza = (Integer) rs.getObject("id_sprzatacza");
-                Integer id_karmienia = (Integer) rs.getObject("id_karmienia");
-                Integer id_popisu = (Integer) rs.getObject("id_popisu");
+                Integer id_sprzatacza = rs.getObject("id_sprzatacza") != null ? rs.getInt("id_sprzatacza") : null;
+                Integer id_karmienia = rs.getObject("id_karmienia") != null ? rs.getInt("id_karmienia") : null;
+                Integer id_popisu = rs.getObject("id_popisu") != null ? rs.getInt("id_popisu") : null;
     
                 data.add(new PlanDniaRecord(id, date, godzina_od, godzina_do, id_sprzatacza, id_karmienia, id_popisu));
             }
@@ -124,7 +147,6 @@ public class PlanAktywnosciController extends ToolBarController {
             e.printStackTrace();
         }
 
-        tableView.setItems(null); 
         tableView.setItems(data);
     }
 
