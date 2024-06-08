@@ -42,47 +42,51 @@
             </Button>
          </items>
       </ToolBar>
-      <ComboBox fx:id="tabelaComboBox" layoutX="490.0" layoutY="116.0" prefHeight="30.0" prefWidth="187.0" promptText="Tabela" />
-      <VBox layoutX="309.0" layoutY="191.0" prefHeight="484.0" prefWidth="552.0">
+      <ComboBox fx:id="tabelaComboBox" layoutX="490.0" layoutY="111.0" prefHeight="30.0" prefWidth="187.0" promptText="Tabela" />
+      <VBox layoutX="309.0" layoutY="177.0" prefHeight="484.0" prefWidth="552.0">
          <children>
             <TextField fx:id="pole1" prefHeight="30.0" prefWidth="715.0" promptText="Pole 1">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <TextField fx:id="pole2" prefHeight="30.0" prefWidth="431.0" promptText="Pole 2">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <TextField fx:id="pole3" prefHeight="30.0" prefWidth="431.0" promptText="Pole 3">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <TextField fx:id="pole4" prefHeight="30.0" prefWidth="431.0" promptText="Pole 4">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <TextField fx:id="pole5" prefHeight="30.0" prefWidth="431.0" promptText="Pole 5">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="pole6" prefHeight="30.0" prefWidth="431.0" promptText="Pole 6" />
+            <TextField fx:id="pole6" prefHeight="30.0" prefWidth="431.0" promptText="Pole 6">
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="pole7" prefHeight="30.0" prefWidth="431.0" promptText="Pole 7" />
          </children>
       </VBox>
-      <Button fx:id="potwierdzButton" layoutX="564.0" layoutY="714.0" mnemonicParsing="false" text="Potwierdz">
+      <Button fx:id="potwierdzButton" layoutX="564.0" layoutY="709.0" mnemonicParsing="false" text="Potwierdz">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <VBox layoutX="117.0" layoutY="184.0" prefHeight="488.0" prefWidth="168.0">
+      <VBox layoutX="117.0" layoutY="176.0" prefHeight="482.0" prefWidth="168.0">
          <children>
             <Label fx:id="label1" prefHeight="31.0" prefWidth="185.0" text="Label 1">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -90,7 +94,7 @@
             </Label>
             <Label fx:id="label2" prefHeight="32.0" prefWidth="312.0" text="Label 2">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -98,7 +102,7 @@
             </Label>
             <Label fx:id="label3" prefHeight="32.0" prefWidth="250.0" text="Label 3">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -106,7 +110,7 @@
             </Label>
             <Label fx:id="label4" prefHeight="32.0" prefWidth="256.0" text="Label 4">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -114,7 +118,7 @@
             </Label>
             <Label fx:id="label5" prefHeight="32.0" prefWidth="244.0" text="Label 5">
                <VBox.margin>
-                  <Insets bottom="60.0" />
+                  <Insets bottom="50.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -124,14 +128,22 @@
                <font>
                   <Font size="16.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="label61" prefHeight="32.0" prefWidth="201.0" text="Label 7">
+               <font>
+                  <Font size="16.0" />
+               </font>
             </Label>
          </children>
       </VBox>
-      <CheckBox fx:id="iloscCheckBox" layoutX="649.0" layoutY="717.0" mnemonicParsing="false" text="Dodaj wiele">
+      <CheckBox fx:id="iloscCheckBox" layoutX="117.0" layoutY="712.0" mnemonicParsing="false" text="Dodaj wiele">
          <font>
             <Font size="16.0" />
          </font>
       </CheckBox>
-      <TextField fx:id="iloscTextField" layoutX="777.0" layoutY="717.0" promptText="ilość" />
+      <TextField fx:id="iloscTextField" layoutX="309.0" layoutY="712.0" promptText="Ilość" />
    </children>
 </AnchorPane>

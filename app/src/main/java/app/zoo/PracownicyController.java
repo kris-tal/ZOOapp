@@ -46,7 +46,14 @@ public class PracownicyController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
-        //usunButton.setOnAction(event -> usunPracownika());
+        usunButton.setOnAction(event -> {
+            Pracownik selectedPracownik = mainTable.getSelectionModel().getSelectedItem();
+            if(selectedPracownik != null) {
+                //UsunController.openUsun();
+            } else {
+                // Żadna krotka nie jest zaznaczona
+            }
+        });
         filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
@@ -67,8 +74,6 @@ public class PracownicyController extends ToolBarController {
         peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
         hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
         mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
-
-
 
     }
 }

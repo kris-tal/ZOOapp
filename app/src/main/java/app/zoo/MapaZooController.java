@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,17 +28,14 @@ public class MapaZooController extends ToolBarController {
     @FXML
     private TreeView<String> wybiegiTreeView;
 
-    @FXML
-    public void usunKrotke() {
-        // Usunięcie krotki z bazy danych
-    }
+
 
     @Override
     public void initialize() {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage) edytujButton.getScene().getWindow()));
-        usunButton.setOnAction(event -> usunKrotke());
+
         wypelnijStrefyComboBox();
         strefyComboBox.setOnAction(event -> wypelnijWybiegiTreeView(strefyComboBox.getValue()));
     }
@@ -56,19 +54,16 @@ public class MapaZooController extends ToolBarController {
     }
 
     private void wypelnijWybiegiTreeView(String strefa) {
-        // Ekstrakcja ID strefy z wybranego elementu ComboBox
         int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
         try (Connection connection = PsqlManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
             preparedStatement.setInt(1, strefaId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            TreeItem<String> rootItem = new TreeItem<>();
+            wybiegiTreeView.setRoot(null);
             while (resultSet.next()) {
                 TreeItem<String> wybiegItem = new TreeItem<>(String.valueOf(resultSet.getInt("id")));
-                // Tutaj możesz dodać inne elementy do wybiegItem
-                rootItem.getChildren().add(wybiegItem);
+                wybiegiTreeView.getRoot().getChildren().add(wybiegItem);
             }
-            wybiegiTreeView.setRoot(rootItem);
         } catch (SQLException e) {
             e.printStackTrace();
         }
