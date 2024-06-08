@@ -48,6 +48,7 @@ public class PracownicyController extends ToolBarController {
         nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
         peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
         hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
+        mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
 
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
@@ -57,14 +58,14 @@ public class PracownicyController extends ToolBarController {
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+                mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
             }
             if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
             prevButton.setDisable(false);
             currentPage++;
-            mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+            mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
         });
     }
 }

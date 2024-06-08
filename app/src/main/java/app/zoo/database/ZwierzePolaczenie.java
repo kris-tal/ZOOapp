@@ -13,7 +13,7 @@ public class ZwierzePolaczenie {
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
             System.out.println("Number: " + number);
-            String query = "SELECT * FROM zwierzeta ORDER BY id ASC LIMIT 20 OFFSET " + number + ";";
+            String query = "SELECT * FROM zwierzeta ORDER BY id ASC LIMIT 23 OFFSET " + number + ";";
             ResultSet resultSet = statement.executeQuery(query);
     
             while (resultSet.next()) {

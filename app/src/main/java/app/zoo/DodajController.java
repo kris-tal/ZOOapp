@@ -57,16 +57,12 @@ public void initialize() {
         connection = PsqlManager.getConnection();
         statement = connection.createStatement();
 
-        // Zapytanie SQL do pobrania listy wszystkich tabel w bieżącej bazie danych
         String queryTables = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
         resultSet = statement.executeQuery(queryTables);
-        
-        // Wczytanie nazw tabel do ComboBoxa
+
         while (resultSet.next()) {
             tabelaComboBox.getItems().add(resultSet.getString("table_name"));
         }
-
-        // Listener dla ComboBoxa, aby załadować metadane wybranej tabeli
         tabelaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             loadTableMetadata(newValue.toString());
         });
