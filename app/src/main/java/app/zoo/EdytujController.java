@@ -42,8 +42,15 @@ public class EdytujController extends ToolBarController {
     @FXML
     private Label label6;
 
+    @Override
+    public void initialize() {
+        super.initialize();
+
+    }
+
     @FXML
     static public void openEdytuj(Stage stage) {
         SceneLoader.loadScene("edytuj.fxml", stage);
     }
+
 }
