@@ -90,7 +90,7 @@ public class DodajController extends ToolBarController {
                 ex.printStackTrace();
             }
         }
-
+        System.out.println(columnNumber);
         for (int i = 0; i < columnNumber; i++) {
             pola[i].setDisable(false);
             etykiety[i].setText(columnNames.get(i));
@@ -104,18 +104,20 @@ public class DodajController extends ToolBarController {
         try {
             connection = PsqlManager.getConnection();
             statement = connection.createStatement();
-
+    
             // Zapytanie SQL do pobrania metadanych (nazw kolumn) dla wybranej tabeli
             String query = "SELECT * FROM " + tableName + " WHERE 1=0";
             resultSet = statement.executeQuery(query);
-
+    
             ResultSetMetaData metaData = resultSet.getMetaData();
             columnNumber = metaData.getColumnCount();
-
+    
+            columnNames.clear(); // Wyczyść listę przed dodaniem nowych nazw kolumn
+    
             for (int i = 1; i <= columnNumber; i++) {
                 columnNames.add(metaData.getColumnName(i));
             }
-
+    
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -126,6 +128,27 @@ public class DodajController extends ToolBarController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+        updateUI(); // Wywołaj metodę aktualizującą UI po załadowaniu metadanych
+    }
+    
+    private void updateUI() {
+        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
+        Label[] etykiety = {label1, label2, label3, label4, label5, label6};
+    
+        // Resetowanie stanu pól i etykiet
+        for (TextField pole : pola) {
+            pole.setDisable(true);
+            pole.clear();
+        }
+        for (Label etykieta : etykiety) {
+            etykieta.setText("");
+        }
+    
+        // Ustawienie nowych wartości dla pól i etykiet na podstawie wybranej tabeli
+        for (int i = 0; i < columnNumber; i++) {
+            pola[i].setDisable(false);
+            etykiety[i].setText(columnNames.get(i));
         }
     }
 
