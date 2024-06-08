@@ -132,6 +132,6 @@
             <Font size="16.0" />
          </font>
       </CheckBox>
-      <TextField fx:id="ilocTextField" layoutX="777.0" layoutY="717.0" promptText="ilość" />
+      <TextField fx:id="iloscTextField" layoutX="777.0" layoutY="717.0" promptText="ilość" />
    </children>
 </AnchorPane>

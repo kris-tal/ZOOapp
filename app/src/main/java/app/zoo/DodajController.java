@@ -47,87 +47,89 @@ public class DodajController extends ToolBarController {
     @FXML
     private ComboBox tabelaComboBox;
 
+    private ArrayList<String> columnNames = new ArrayList<>();
+    private int columnNumber;
+
     @Override
-public void initialize() {
-    super.initialize();
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-    try {
-        connection = PsqlManager.getConnection();
-        statement = connection.createStatement();
-
-        String queryTables = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
-        resultSet = statement.executeQuery(queryTables);
-
-        while (resultSet.next()) {
-            tabelaComboBox.getItems().add(resultSet.getString("table_name"));
-        }
-        tabelaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            loadTableMetadata(newValue.toString());
-        });
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-}
-
-private void loadTableMetadata(String tableName) {
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-    try {
-        connection = PsqlManager.getConnection();
-        statement = connection.createStatement();
-
-        // Zapytanie SQL do pobrania metadanych (nazw kolumn) dla wybranej tabeli
-        String query = "SELECT * FROM " + tableName + " WHERE 1=0";
-        resultSet = statement.executeQuery(query);
-
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int columnNumber = metaData.getColumnCount();
-
-        ArrayList<String> columnNames = new ArrayList<>();
-        for (int i = 1; i <= columnNumber; i++) {
-            columnNames.add(metaData.getColumnName(i));
-        }
-
+    public void initialize() {
+        super.initialize();
         iloscCheckBox.setDisable(true);
         iloscTextField.setDisable(true);
         TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
         Label[] etykiety = {label1, label2, label3, label4, label5, label6};
+
         for (TextField pole : pola) {
             pole.setDisable(true);
         }
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = PsqlManager.getConnection();
+            statement = connection.createStatement();
+            columnNames = new ArrayList<>();
 
-        for (int i = 0; i < columnNumber; i++) {
-            if (i < pola.length) {
-                pola[i].setDisable(false);
-                etykiety[i].setText(columnNames.get(i));
+            String queryTables = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
+            resultSet = statement.executeQuery(queryTables);
+
+            while (resultSet.next()) {
+                tabelaComboBox.getItems().add(resultSet.getString("table_name"));
+            }
+            tabelaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+                loadTableMetadata(newValue.toString());
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
+        for (int i = 0; i < columnNumber; i++) {
+            pola[i].setDisable(false);
+            etykiety[i].setText(columnNames.get(i));
         }
     }
-}
 
-    static public void openDodaj(Stage stage) {
-        SceneLoader.loadScene("dodaj.fxml", stage);
+    private void loadTableMetadata(String tableName) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = PsqlManager.getConnection();
+            statement = connection.createStatement();
+
+            // Zapytanie SQL do pobrania metadanych (nazw kolumn) dla wybranej tabeli
+            String query = "SELECT * FROM " + tableName + " WHERE 1=0";
+            resultSet = statement.executeQuery(query);
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnNumber = metaData.getColumnCount();
+
+            for (int i = 1; i <= columnNumber; i++) {
+                columnNames.add(metaData.getColumnName(i));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
+
+        static public void openDodaj(Stage stage) {
+            SceneLoader.loadScene("dodaj.fxml", stage);
+        }
 }
