@@ -77,6 +77,8 @@ public class ZwierzetaController extends ToolBarController {
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
         poziomUmiejetnosciColumn.setCellValueFactory(new PropertyValueFactory<>("poziomUmiejetnosci"));
         nazwaGatunkuColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaGatunku"));
+        zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
+
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
         prevButton.setOnAction(event -> {
