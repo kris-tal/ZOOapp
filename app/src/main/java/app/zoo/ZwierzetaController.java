@@ -1,5 +1,6 @@
 package app.zoo;
 
+import app.zoo.database.PracownicyPolaczenie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -42,6 +43,10 @@ public class ZwierzetaController extends ToolBarController {
     private Button usunButton;
     @FXML
     private Button filtrujButton;
+    @FXML
+    private Button prevButton;
+    @FXML
+    private Button nextButton;
 
     @FXML
     public void openDodaj() {
@@ -89,6 +94,18 @@ public class ZwierzetaController extends ToolBarController {
         }
         dodajButton.setOnAction(event -> openDodaj());
         edytujButton.setOnAction(event -> openEdytuj());
+        prevButton.setOnAction(event -> {
+            if (currentPage > 0) {
+                currentPage--;
+                mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+            }
+            if(currentPage == 0) prevButton.setDisable(true);
+        });
+        nextButton.setOnAction(event -> {
+            prevButton.setDisable(false);
+            currentPage++;
+            mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
+        });
 
     }
 }
