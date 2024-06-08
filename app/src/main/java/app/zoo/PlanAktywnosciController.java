@@ -60,9 +60,6 @@ public class PlanAktywnosciController extends ToolBarController {
     private LocalDate currentDate;
 
     @FXML
-    private Button mojPlanButton;
-
-    @FXML
     public void openDodaj() {
         try {
             SceneLoader.loadScene("dodaj.fxml", new Stage());
