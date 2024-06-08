@@ -110,7 +110,7 @@ public class DodajController extends ToolBarController {
             resultSet = statement.executeQuery(query);
 
             ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnNumber = metaData.getColumnCount();
+            columnNumber = metaData.getColumnCount();
 
             for (int i = 1; i <= columnNumber; i++) {
                 columnNames.add(metaData.getColumnName(i));
