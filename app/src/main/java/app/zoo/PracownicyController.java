@@ -82,12 +82,14 @@ public class PracownicyController extends ToolBarController {
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                updateTable();
+                updateTable(currentPage * 50);
             }
+            if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
+            prevButton.setDisable(false);
             currentPage++;
-            updateTable();
+            updateTable(currentPage * 50);
         });
     }
 }

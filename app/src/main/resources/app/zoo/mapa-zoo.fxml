@@ -19,7 +19,7 @@
                <children>
                   <ImageView fitHeight="515.0" fitWidth="369.0" layoutX="48.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@images/siteks.jpg" />
+                            <Image url="@images/mapa.png" />
                         </image>
                     </ImageView>
                </children>
