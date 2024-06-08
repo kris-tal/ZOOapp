@@ -10,6 +10,7 @@ import app.zoo.database.PsqlManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 
 public class MapaZooController extends ToolBarController{
@@ -23,6 +24,8 @@ public class MapaZooController extends ToolBarController{
     private Button filtrujButton;
     @FXML
     private ComboBox<String> strefyComboBox;
+    @FXML
+    private TreeView<String> wybiegiTreeView; //moze byc integer jak ci wygodniej
 
     @FXML
     public void usunKrotke() {  //tu jako argument bedzie jakas krotka cze cos
