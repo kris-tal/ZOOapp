@@ -42,7 +42,7 @@
             </Button>
          </items>
       </ToolBar>
-      <ComboBox layoutX="490.0" layoutY="116.0" prefHeight="30.0" prefWidth="187.0" promptText="Tabela" />
+      <ComboBox fx:id="tabelaComboBox" layoutX="490.0" layoutY="116.0" prefHeight="30.0" prefWidth="187.0" promptText="Tabela" />
       <VBox layoutX="309.0" layoutY="191.0" prefHeight="484.0" prefWidth="552.0">
          <children>
             <TextField fx:id="pole1" prefHeight="30.0" prefWidth="715.0" promptText="Pole 1">
