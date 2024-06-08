@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.zoo.database.PsqlManager;
+import app.zoo.database.PracownicyPolaczenie;
 import app.zoo.database.Pracownik;
 import javafx.stage.Stage;
 
@@ -56,24 +57,6 @@ public class PracownicyController extends ToolBarController {
         peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
         hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
 
-        try (Connection connection = PsqlManager.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM pracownicy LIMIT 50"); //tymczasowe
-
-            List<Pracownik> pracownicy = new ArrayList<>();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String imie = resultSet.getString("imie");
-                String nazwisko = resultSet.getString("nazwisko");
-                String pesel = resultSet.getString("pesel");
-                int haslo = resultSet.getInt("haslo");
-                pracownicy.add(new Pracownik(id, imie, nazwisko, pesel, haslo));
-            }
-
-            mainTable.getItems().setAll(pracownicy);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
@@ -82,14 +65,14 @@ public class PracownicyController extends ToolBarController {
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                updateTable(currentPage * 50);
+                mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
             }
             if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
             prevButton.setDisable(false);
             currentPage++;
-            updateTable(currentPage * 50);
+            mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 30));
         });
     }
 }

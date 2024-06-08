@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import app.zoo.database.MojPracownik;
 import app.zoo.database.PlanDniaRecord;
 import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
@@ -104,7 +105,7 @@ public class PlanAktywnosciController extends ToolBarController {
             }
             mojPlan = true;
             mojPlanButton.setText("Cały plan");
-            mojPlanOption = " AND (" + Pracownik.getID() + " = id_sprzatacza" + " OR " + Pracownik.getID() + " = id_karmienia" + " OR " + Pracownik.getID() + " = id_popisu)";
+            mojPlanOption = " AND (" + MojPracownik.getID() + " = id_sprzatacza" + " OR " + MojPracownik.getID() + " = id_karmienia" + " OR " + MojPracownik.getID() + " = id_popisu)";
             displayPlanDniaRecords(mojPlanOption);
         });
 

@@ -72,7 +72,7 @@ public class ZwierzetaController extends ToolBarController {
 
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM zwierzeta");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM zwierzeta limit 10;");
 
             List<Zwierze> zwierzeta = new ArrayList<>();
             while (resultSet.next()) {

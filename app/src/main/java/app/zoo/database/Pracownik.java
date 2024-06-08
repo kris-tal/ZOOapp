@@ -1,48 +1,37 @@
 package app.zoo.database;
 
 public class Pracownik {
-    private static int id;
-    private static String imie;
-    private static String nazwisko;
-    private static String pesel;
-    private static int haslo;
-    private static String role;
-    private static boolean permissions;
+    int id;
+    String imie;
+    private String nazwisko;
+    private String pesel;
+    private int haslo;
 
     public Pracownik(int id, String imie, String nazwisko, String pesel, int haslo) {
-        Pracownik.id = id;
-        Pracownik.imie = imie;
-        Pracownik.nazwisko = nazwisko;
-        Pracownik.pesel = pesel;
-        Pracownik.haslo = haslo;
-        Pracownik.role = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
+        this.id = id;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.pesel = pesel;
+        this.haslo = haslo;
     }
 
-    public static String getImie() {
+    public String getImie() {
         return imie;
     }
 
-    public static String getNazwisko() {
+    public String getNazwisko() {
         return nazwisko;
     }
 
-    public static String getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public static int getHaslo() {
+    public int getHaslo() {
         return haslo;
     }
 
-    public static int getID() {
+    public int getID() {
         return id;
-    }
-
-    public static String getRole() {
-        return role;
-    }
-
-    public static boolean getPermissions() {
-        return permissions;
     }
 }
