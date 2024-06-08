@@ -36,7 +36,16 @@ public class PracownicyController extends ToolBarController {
     private Button edytujButton;
     @FXML
     private Button usunButton;
+    @FXML
+    private Button filtrujButton;
+    @FXML
+    private Button prevButton;
+    @FXML
+    private Button nextButton;
 
+    private int currentPage = 0;
+
+    //dac updateArray jako funkcje, to samo w zwierzetach (argument to ilosc offsetu)
 
     @FXML
     public void initialize() {
@@ -49,7 +58,7 @@ public class PracownicyController extends ToolBarController {
 
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM pracownicy LIMIT 50");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM pracownicy LIMIT 50"); //tymczasowe
 
             List<Pracownik> pracownicy = new ArrayList<>();
             while (resultSet.next()) {
@@ -68,5 +77,17 @@ public class PracownicyController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
+        //usunButton.setOnAction(event -> usunPracownika());
+        filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
+        prevButton.setOnAction(event -> {
+            if (currentPage > 0) {
+                currentPage--;
+                //updateTable();
+            }
+        });
+        nextButton.setOnAction(event -> {
+            currentPage++;
+            //updateTable();
+        });
     }
 }
