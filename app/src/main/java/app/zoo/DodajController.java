@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -42,9 +43,44 @@ public class DodajController extends ToolBarController {
     @FXML
     private TextField iloscTextField;
     @FXML
-    private ComboBox tabelaComboBox;
+    private ComboBox<String> tabelaComboBox; // Specify the type for ComboBox
     @FXML
-    private Button potwierdzButton;
+    private Button potwierdzButton; // Corrected the syntax error here
+
+    @FXML
+    private void handlePotwierdzButtonAction() { // Corrected method declaration
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = PsqlManager.getConnection();
+            StringBuilder columns = new StringBuilder();
+            StringBuilder values = new StringBuilder();
+            for (int i = 0; i < columnNumber; i++) {
+                columns.append(columnNames.get(i)).append(i < columnNumber - 1 ? ", " : "");
+                values.append("?").append(i < columnNumber - 1 ? ", " : "");
+            }
+            String insertQuery = "INSERT INTO " + tabelaComboBox.getValue() + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
+            preparedStatement = connection.prepareStatement(insertQuery);
+            TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
+            for (int i = 0; i < columnNumber; i++) {
+                preparedStatement.setString(i + 1, pola[i].getText());
+            }
+            preparedStatement.executeUpdate();
+            // Provide feedback to the user
+            System.out.println("Record added successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Provide feedback to the user
+            System.out.println("Failed to add record.");
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
     private ArrayList<String> columnNames = new ArrayList<>();
     private int columnNumber;
@@ -94,6 +130,7 @@ public class DodajController extends ToolBarController {
             pola[i].setDisable(false);
             etykiety[i].setText(columnNames.get(i));
         }
+        potwierdzButton.setOnAction(event -> handlePotwierdzButtonAction());
     }
 
     private void loadTableMetadata(String tableName) {
@@ -103,16 +140,16 @@ public class DodajController extends ToolBarController {
         try {
             connection = PsqlManager.getConnection();
             statement = connection.createStatement();
-    
+
             String query = "SELECT * FROM " + tableName + " WHERE 1=0";
             resultSet = statement.executeQuery(query);
-    
+
             ResultSetMetaData metaData = resultSet.getMetaData();
             int totalColumnCount = metaData.getColumnCount();
-    
+
             columnNames.clear();
             columnNumber = 0; 
-    
+
             for (int i = 1; i <= totalColumnCount; i++) {
                 String columnName = metaData.getColumnName(i);
                 if (!columnName.equalsIgnoreCase("id")) {
@@ -120,7 +157,7 @@ public class DodajController extends ToolBarController {
                     columnNumber++;
                 }
             }
-    
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -134,11 +171,11 @@ public class DodajController extends ToolBarController {
         }
         updateUI();
     }
-    
+
     private void updateUI() {
         TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
         Label[] etykiety = {label1, label2, label3, label4, label5, label6};
-    
+
         for (TextField pole : pola) {
             pole.setDisable(true);
             pole.clear();
@@ -146,14 +183,14 @@ public class DodajController extends ToolBarController {
         for (Label etykieta : etykiety) {
             etykieta.setText("");
         }
-    
+
         for (int i = 0; i < columnNumber; i++) {
             pola[i].setDisable(false);
             etykiety[i].setText(columnNames.get(i));
         }
     }
 
-        static public void openDodaj(Stage stage) {
-            SceneLoader.loadScene("dodaj.fxml", stage);
-        }
+    static public void openDodaj(Stage stage) {
+        SceneLoader.loadScene("dodaj.fxml", stage);
+    }
 }
