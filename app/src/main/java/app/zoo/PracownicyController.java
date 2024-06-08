@@ -43,13 +43,6 @@ public class PracownicyController extends ToolBarController {
     @FXML
     public void initialize() {
         super.initialize();
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
-        peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
-        hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
-        mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
-
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
@@ -67,5 +60,15 @@ public class PracownicyController extends ToolBarController {
             currentPage++;
             mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
         });
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
+        nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+        peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
+        hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
+        mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
+
+
+
     }
 }
