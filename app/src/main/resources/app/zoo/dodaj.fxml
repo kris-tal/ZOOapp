@@ -73,7 +73,7 @@
             <TextField fx:id="pole6" prefHeight="30.0" prefWidth="431.0" promptText="Pole 6" />
          </children>
       </VBox>
-      <Button fx:id="dodajButton" layoutX="564.0" layoutY="714.0" mnemonicParsing="false" text="Dodaj">
+      <Button fx:id="potwierdzButton" layoutX="564.0" layoutY="714.0" mnemonicParsing="false" text="Potwierdz">
          <font>
             <Font size="16.0" />
          </font>

@@ -1,10 +1,7 @@
 package app.zoo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -46,6 +43,8 @@ public class DodajController extends ToolBarController {
     private TextField iloscTextField;
     @FXML
     private ComboBox tabelaComboBox;
+    @FXML
+    private Button potwierdzButton;
 
     private ArrayList<String> columnNames = new ArrayList<>();
     private int columnNumber;
