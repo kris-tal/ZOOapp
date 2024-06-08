@@ -26,7 +26,7 @@
             </Pane>
             <Pane prefHeight="562.0" prefWidth="527.0">
                <children>
-                  <ComboBox layoutX="63.0" layoutY="21.0" prefHeight="37.0" prefWidth="313.0" promptText="Strefa" visibleRowCount="6" />
+                  <ComboBox fx:id="strefyComboBox" layoutX="63.0" layoutY="21.0" prefHeight="37.0" prefWidth="313.0" promptText="Strefa" visibleRowCount="6" />
                   <TreeView layoutX="50.0" layoutY="97.0" prefHeight="414.0" prefWidth="348.0" />
                </children>
             </Pane>

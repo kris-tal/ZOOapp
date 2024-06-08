@@ -41,9 +41,11 @@
       </ToolBar>
       <Pane layoutX="20.0" layoutY="83.0" prefHeight="681.0" prefWidth="959.0">
          <children>
+            <Button fx:id="nextButton" layoutX="875.0" layoutY="349.0" mnemonicParsing="false" text="&gt;" />
             <Button fx:id="dodajButton" layoutX="577.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj" />
             <Button fx:id="edytujButton" layoutX="692.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Edytuj" />
             <Button fx:id="usunButton" layoutX="805.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń" />
+            <Button fx:id="prevButton" layoutX="66.0" layoutY="347.0" mnemonicParsing="false" text="&lt;" />
             <TableView fx:id="mainTable" layoutX="44.0" layoutY="69.0" prefHeight="587.0" prefWidth="877.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
@@ -53,6 +55,7 @@
                 <TableColumn fx:id="hasloColumn" prefWidth="75.0" text="Hasło" />
               </columns>
             </TableView>
+            <Button fx:id="filtrujButton" layoutX="67.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Filtruj..." />
          </children>
       </Pane>
    </children>

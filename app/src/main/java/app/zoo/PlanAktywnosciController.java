@@ -56,29 +56,14 @@ public class PlanAktywnosciController extends ToolBarController {
     private Button usunButton;
     @FXML
     private Button mojPlanButton;
+    @FXML
+    public Button filtrujButton;
 
     private LocalDate currentDate;
 
     private String mojPlanOption;
     private boolean mojPlan;
 
-    @FXML
-    public void openDodaj() {
-        try {
-            SceneLoader.loadScene("dodaj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void openEdytuj() {
-        try {
-            SceneLoader.loadScene("edytuj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void initialize() {
         super.initialize();
@@ -123,8 +108,9 @@ public class PlanAktywnosciController extends ToolBarController {
             displayPlanDniaRecords(mojPlanOption);
         });
 
-        dodajButton.setOnAction(event -> openDodaj());
-        edytujButton.setOnAction(event -> openEdytuj());
+        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
+        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
+        filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
 
         
     

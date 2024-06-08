@@ -3,6 +3,7 @@ package app.zoo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 public class MapaZooController extends ToolBarController{
@@ -12,6 +13,10 @@ public class MapaZooController extends ToolBarController{
     private Button edytujButton;
     @FXML
     private Button usunButton;
+    @FXML
+    private Button filtrujButton;
+    @FXML
+    private ComboBox<String> strefyComboBox;
 
     @FXML
     public void usunKrotke() {  //tu jako argument bedzie jakas krotka cze cos

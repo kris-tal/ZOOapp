@@ -38,6 +38,8 @@ public class ZwierzetaController extends ToolBarController {
     private Button edytujButton;
     @FXML
     private Button usunButton;
+    @FXML
+    private Button filtrujButton;
 
     @FXML
     public void openDodaj() {
