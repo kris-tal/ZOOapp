@@ -52,35 +52,10 @@ public class ZwierzetaController extends ToolBarController {
     int currentPage = 0;
 
     @FXML
-    public void openDodaj() {
-        try {
-            SceneLoader.loadScene("dodaj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void openEdytuj() {
-        try {
-            SceneLoader.loadScene("edytuj.fxml", new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     public void initialize() {
         super.initialize();
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        gatunekColumn.setCellValueFactory(new PropertyValueFactory<>("gatunek"));
-        imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        poziomUmiejetnosciColumn.setCellValueFactory(new PropertyValueFactory<>("poziomUmiejetnosci"));
-        nazwaGatunkuColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaGatunku"));
-        zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
-
-        dodajButton.setOnAction(event -> openDodaj());
-        edytujButton.setOnAction(event -> openEdytuj());
+        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
+        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage) edytujButton.getScene().getWindow()));
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
@@ -93,6 +68,14 @@ public class ZwierzetaController extends ToolBarController {
             currentPage++;
             zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
         });
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        gatunekColumn.setCellValueFactory(new PropertyValueFactory<>("gatunek"));
+        imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
+        poziomUmiejetnosciColumn.setCellValueFactory(new PropertyValueFactory<>("poziomUmiejetnosci"));
+        nazwaGatunkuColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaGatunku"));
+        zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
+
+
 
     }
 }
