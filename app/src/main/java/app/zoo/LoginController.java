@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import app.zoo.database.MojPracownik;
 import app.zoo.database.MyController;
 import app.zoo.database.PsqlManager;
 import app.zoo.services.Find;
@@ -67,7 +68,9 @@ public class LoginController {
         System.out.println("Hashed password: " + password);
         try {
             if(Find.findEmployeeByUserIDAndPassword(userID, password) != null) {
-                openMainPage(Find.findEmployeeByUserIDAndPassword(userID, password));
+                Pracownik p = Find.findEmployeeByUserIDAndPassword(userID, password);
+                MojPracownik pracownik = new MojPracownik(p.getID(), p.getImie(), p.getNazwisko(), p.getPesel(), p.getHaslo());
+                openMainPage(p);
             } else {
                 System.out.println("Invalid credentials");
             }
