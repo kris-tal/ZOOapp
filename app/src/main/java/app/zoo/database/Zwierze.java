@@ -4,40 +4,45 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Zwierze {
     private int id;
     private int gatunek;
     private String imie;
     private int poziomUmiejetnosci;
-    private String nazwaGatunku; // New field to store the species name
+    private String nazwaGatunku; 
+    private static Map<Integer, String> gatunki = new HashMap<>();
 
     public Zwierze(int id, int gatunek, String imie, int poziomUmiejetnosci) {
         this.id = id;
         this.gatunek = gatunek;
         this.imie = imie;
         this.poziomUmiejetnosci = poziomUmiejetnosci;
-        this.nazwaGatunku = fetchNazwaGatunku(gatunek); // Fetch and set the species name during object creation
+        if(gatunki.isEmpty()) {
+            gatunki = fetchNazwaGatunku(gatunek); 
+        }
+        this.nazwaGatunku = gatunki.get(gatunek); 
     }
 
-    private String fetchNazwaGatunku(int gatunekId) {
-        String nazwa = "";
-        String query = "SELECT nazwa FROM gatunki WHERE id = ?";
-        // Use try-with-resources for automatic resource management
+    private Map<Integer, String> fetchNazwaGatunku(int gatunekId) {
+        Map<Integer, String> localGatunki = new HashMap<>();
+        String query = "SELECT id, nazwa FROM gatunki"; 
         try (Connection connection = PsqlManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gatunekId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    nazwa = resultSet.getString("nazwa");
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nazwa = resultSet.getString("nazwa");
+                    localGatunki.put(id, nazwa);
                 }
             }
-            System.out.println("Species name fetched successfully");
-            System.out.println("Species name: " + nazwa);
+            System.out.println("Species names fetched successfully");
         } catch (SQLException e) {
             System.out.println("SQLException thrown: " + e.getMessage());
         }
-        return nazwa;
+        return localGatunki;
     }
 
     public int getId() {
