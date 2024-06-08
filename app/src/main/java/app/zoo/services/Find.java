@@ -22,7 +22,7 @@ public static Pracownik findEmployeeByUserIDAndPassword(int userID, String passw
             String imie = resultSet.getString("imie");
             String nazwisko = resultSet.getString("nazwisko");
             String pesel = resultSet.getString("pesel");
-            int haslo = resultSet.getInt("haslo");
+            String haslo = resultSet.getString("haslo");
             pracownik = new Pracownik(userID, imie, nazwisko, pesel, haslo);
         } else {
             System.out.println("No employee found with given userID and password tak tu jestem");
@@ -42,7 +42,7 @@ public static void displayAllEmployees() {
             String imie = resultSet.getString("imie");
             String nazwisko = resultSet.getString("nazwisko");
             String pesel = resultSet.getString("pesel");
-            int haslo = resultSet.getInt("haslo");
+            String haslo = resultSet.getString("haslo");
             System.out.println("ID: " + id + ", Imie: " + imie + ", Nazwisko: " + nazwisko + ", Pesel: " + pesel + ", Haslo: " + haslo);
         }
     } catch (SQLException e) {

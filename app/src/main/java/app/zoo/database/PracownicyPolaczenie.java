@@ -23,7 +23,7 @@ public class PracownicyPolaczenie {
                 String imie = resultSet.getString("imie");
                 String nazwisko = resultSet.getString("nazwisko");
                 String pesel = resultSet.getString("pesel");
-                int haslo = resultSet.getInt("haslo");
+                String haslo = resultSet.getString("haslo");
                 pracownicy.add(new Pracownik(id, imie, nazwisko, pesel, haslo));
             }
         } catch (SQLException e) {

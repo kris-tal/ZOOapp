@@ -5,9 +5,9 @@ public class Pracownik {
     String imie;
     private String nazwisko;
     private String pesel;
-    private int haslo;
+    private String haslo;
 
-    public Pracownik(int id, String imie, String nazwisko, String pesel, int haslo) {
+    public Pracownik(int id, String imie, String nazwisko, String pesel, String haslo) {
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -27,7 +27,7 @@ public class Pracownik {
         return pesel;
     }
 
-    public int getHaslo() {
+    public String getHaslo() {
         return haslo;
     }
 

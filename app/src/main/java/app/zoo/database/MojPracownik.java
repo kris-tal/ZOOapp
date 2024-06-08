@@ -5,12 +5,12 @@ private static int id;
 private static String imie;
 private static String nazwisko;
 private static String pesel;
-private static int haslo;
+private static String haslo;
 private static String role;
 private static boolean permissions;
 private static boolean zarzadca;
 
-public MojPracownik(int id, String imie, String nazwisko, String pesel, int haslo) {
+public MojPracownik(int id, String imie, String nazwisko, String pesel, String haslo) {
     MojPracownik.id = id;
     MojPracownik.imie = imie;
     MojPracownik.nazwisko = nazwisko;
@@ -31,7 +31,7 @@ public static String getPesel() {
     return pesel;
 }
 
-public static int getHaslo() {
+public static String getHaslo() {
     return haslo;
 }
 
