@@ -62,9 +62,11 @@ public class MapaZooController extends ToolBarController {
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
             preparedStatement.setInt(1, strefaId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            TreeItem<String> rootItem = new TreeItem<>("Wybiegi");
+            TreeItem<String> rootItem = new TreeItem<>();
             while (resultSet.next()) {
-                rootItem.getChildren().add(new TreeItem<>(String.valueOf(resultSet.getInt("id"))));
+                TreeItem<String> wybiegItem = new TreeItem<>(String.valueOf(resultSet.getInt("id")));
+                // Tutaj możesz dodać inne elementy do wybiegItem
+                rootItem.getChildren().add(wybiegItem);
             }
             wybiegiTreeView.setRoot(rootItem);
         } catch (SQLException e) {
