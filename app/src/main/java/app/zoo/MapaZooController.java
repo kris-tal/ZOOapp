@@ -1,6 +1,5 @@
 package app.zoo;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +9,11 @@ import app.zoo.database.PsqlManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 
-public class MapaZooController extends ToolBarController{
+public class MapaZooController extends ToolBarController {
     @FXML
     private Button dodajButton;
     @FXML
@@ -23,30 +23,50 @@ public class MapaZooController extends ToolBarController{
     @FXML
     private Button filtrujButton;
     @FXML
-    private ComboBox<String> strefyComboBox;
+    private ComboBox<String> strefyComboBox; // Zmieniamy typ na ComboBox<Pair<String, Integer>> jeśli chcemy przechowywać zarówno nazwę jak i ID
     @FXML
-    private TreeView<String> wybiegiTreeView; //moze byc integer jak ci wygodniej
+    private TreeView<String> wybiegiTreeView;
 
     @FXML
-    public void usunKrotke() {  //tu jako argument bedzie jakas krotka cze cos
-        //usuniecie krotki z bazy danych
+    public void usunKrotke() {
+        // Usunięcie krotki z bazy danych
     }
 
     @Override
     public void initialize() {
         super.initialize();
-        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
-        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
+        dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
+        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage) edytujButton.getScene().getWindow()));
         usunButton.setOnAction(event -> usunKrotke());
         wypelnijStrefyComboBox();
+        strefyComboBox.setOnAction(event -> wypelnijWybiegiTreeView(strefyComboBox.getValue()));
     }
+
     private void wypelnijStrefyComboBox() {
         try (Connection connection = PsqlManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT nazwa FROM strefy");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, nazwa FROM strefy");
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                strefyComboBox.getItems().add(resultSet.getString("nazwa"));
+                String strefa = resultSet.getString("nazwa") + " (" + resultSet.getInt("id") + ")";
+                strefyComboBox.getItems().add(strefa);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void wypelnijWybiegiTreeView(String strefa) {
+        // Ekstrakcja ID strefy z wybranego elementu ComboBox
+        int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
+        try (Connection connection = PsqlManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
+            preparedStatement.setInt(1, strefaId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            TreeItem<String> rootItem = new TreeItem<>("Wybiegi");
+            while (resultSet.next()) {
+                rootItem.getChildren().add(new TreeItem<>(String.valueOf(resultSet.getInt("id"))));
+            }
+            wybiegiTreeView.setRoot(rootItem);
         } catch (SQLException e) {
             e.printStackTrace();
         }
