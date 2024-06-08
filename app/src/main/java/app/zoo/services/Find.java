@@ -9,14 +9,14 @@ import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
 
 public class Find {
-public static Pracownik findEmployeeByUserIDAndPassword(int userID, int password) {
+public static Pracownik findEmployeeByUserIDAndPassword(int userID, String password) {
     Pracownik pracownik = null;
     displayAllEmployees();
     try (Connection connection = PsqlManager.getConnection()) {
         String sql = "SELECT * FROM pracownicy WHERE id = ? AND haslo = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, userID);
-        statement.setInt(2, password);
+        statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             String imie = resultSet.getString("imie");

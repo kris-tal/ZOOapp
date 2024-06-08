@@ -51,7 +51,7 @@ public class LoginController {
     }
 
     private int userID;
-    private int password;
+    private String password;
     
     @FXML
     protected void onLoginButtonClick() {
@@ -64,7 +64,7 @@ public class LoginController {
             return;
         }
         System.out.println("Password: " + passwordField.getText());
-        password = HashHelper.hashPassword(passwordField.getText());
+        //password = HashHelper.hashPassword(passwordField.getText());
         System.out.println("Hashed password: " + password);
         try {
             if(Find.findEmployeeByUserIDAndPassword(userID, password) != null) {
