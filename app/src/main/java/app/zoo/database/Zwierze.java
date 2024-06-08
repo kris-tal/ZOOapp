@@ -22,18 +22,16 @@ public class Zwierze {
 
     private String fetchNazwaGatunku(int gatunekId) {
         String nazwa = "";
-        try {
-            Connection connection = PsqlManager.getConnection();
-            String query = "SELECT nazwa FROM gatunki WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        String query = "SELECT nazwa FROM gatunki WHERE id = ?";
+        // Use try-with-resources for automatic resource management
+        try (Connection connection = PsqlManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gatunekId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                nazwa = resultSet.getString("nazwa");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    nazwa = resultSet.getString("nazwa");
+                }
             }
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
             System.out.println("Species name fetched successfully");
             System.out.println("Species name: " + nazwa);
         } catch (SQLException e) {

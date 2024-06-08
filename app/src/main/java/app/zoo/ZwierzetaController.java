@@ -82,14 +82,14 @@ public class ZwierzetaController extends ToolBarController {
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
-                zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 20));
+                zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
             }
             if(currentPage == 0) prevButton.setDisable(true);
         });
         nextButton.setOnAction(event -> {
             prevButton.setDisable(false);
             currentPage++;
-            zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 20));
+            zwierzetaTable.getItems().setAll(ZwierzePolaczenie.updateTable(currentPage * 23));
         });
 
     }
