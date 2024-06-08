@@ -112,13 +112,13 @@ public class PlanAktywnosciController extends ToolBarController {
         mojPlanButton.setOnAction(event -> {
             if(mojPlan) {
                 mojPlan = false;
-                mojPlanButton.setText("Cały plan");
+                mojPlanButton.setText("Mój plan");
                 mojPlanOption = "";
                 displayPlanDniaRecords(mojPlanOption);
                 return;
             }
             mojPlan = true;
-            mojPlanButton.setText("Mój plan");
+            mojPlanButton.setText("Cały plan");
             mojPlanOption = " AND (" + Pracownik.getID() + " = id_sprzatacza" + " OR " + Pracownik.getID() + " = id_karmienia" + " OR " + Pracownik.getID() + " = id_popisu)";
             displayPlanDniaRecords(mojPlanOption);
         });
