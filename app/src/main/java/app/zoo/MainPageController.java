@@ -1,6 +1,7 @@
 package app.zoo;
 
 
+import app.zoo.database.MojPracownik;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -16,8 +17,8 @@ public class MainPageController extends ToolBarController{
 
     public void updateUserDetails() {
         idLabel.setText("ID: " + super.getPracownik().getID());
-        stanowiskoLabel.setText("Stanowisko: " + super.getPracownik().getRole());
-        uprawnieniaLabel.setText("Uprawnienia: " + super.getPracownik().getPermissions());
+        stanowiskoLabel.setText("Stanowisko: ");
+        uprawnieniaLabel.setText("Uprawnienia: " + MojPracownik.getZarzadca());
     }
 }
 

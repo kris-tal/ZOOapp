@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class PracownikDao {
-    public static String getPracownicyWithStanowiska(String username, String surname, String pesel) {
+    public static boolean getPracownicyWithStanowiska(String username, String surname, String pesel) {
         String stanowisko = null;
 
         try (Connection conn = PsqlManager.getConnection();
@@ -14,11 +14,14 @@ public class PracownikDao {
 
             if (rs.next()) {
                 stanowisko = rs.getString("stanowisko");
+                if(stanowisko == "zarządca") {
+                    return true;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return stanowisko;
+        return false;
     }
 }

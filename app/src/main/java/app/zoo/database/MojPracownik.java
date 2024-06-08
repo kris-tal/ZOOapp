@@ -8,6 +8,7 @@ private static String pesel;
 private static int haslo;
 private static String role;
 private static boolean permissions;
+private static boolean zarzadca;
 
 public MojPracownik(int id, String imie, String nazwisko, String pesel, int haslo) {
     MojPracownik.id = id;
@@ -15,7 +16,7 @@ public MojPracownik(int id, String imie, String nazwisko, String pesel, int hasl
     MojPracownik.nazwisko = nazwisko;
     MojPracownik.pesel = pesel;
     MojPracownik.haslo = haslo;
-    MojPracownik.role = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
+    MojPracownik.zarzadca = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
 }
 
 public static String getImie() {
@@ -44,5 +45,8 @@ public static String getRole() {
 
 public static boolean getPermissions() {
     return permissions;
+}
+public static boolean getZarzadca() {
+    return zarzadca;
 }
 }

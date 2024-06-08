@@ -6,8 +6,6 @@ public class Pracownik {
     private String nazwisko;
     private String pesel;
     private int haslo;
-    private String role;
-    private boolean permissions;
 
     public Pracownik(int id, String imie, String nazwisko, String pesel, int haslo) {
         this.id = id;
@@ -15,7 +13,6 @@ public class Pracownik {
         this.nazwisko = nazwisko;
         this.pesel = pesel;
         this.haslo = haslo;
-        //this.role = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
     }
 
     public String getImie() {
@@ -36,13 +33,5 @@ public class Pracownik {
 
     public int getID() {
         return id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public boolean getPermissions() {
-        return permissions;
     }
 }
