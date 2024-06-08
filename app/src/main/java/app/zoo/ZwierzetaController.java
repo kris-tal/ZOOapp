@@ -33,6 +33,8 @@ public class ZwierzetaController extends ToolBarController {
     @FXML
     private TableColumn<Zwierze, Integer> poziomUmiejetnosciColumn;
     @FXML
+    private TableColumn<Zwierze, String> nazwaGatunkuColumn;
+    @FXML
     private Button dodajButton;
     @FXML
     private Button edytujButton;
@@ -66,6 +68,7 @@ public class ZwierzetaController extends ToolBarController {
         gatunekColumn.setCellValueFactory(new PropertyValueFactory<>("gatunek"));
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
         poziomUmiejetnosciColumn.setCellValueFactory(new PropertyValueFactory<>("poziomUmiejetnosci"));
+        nazwaGatunkuColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaGatunku"));
 
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
