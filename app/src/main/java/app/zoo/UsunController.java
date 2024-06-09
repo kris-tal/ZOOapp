@@ -14,10 +14,6 @@ public class UsunController extends ToolBarController{
     @FXML
     private Label label1, label2, label3, label4, label5, label6, label7;
     @FXML
-    private CheckBox iloscCheckBox;
-    @FXML
-    private TextField iloscTextField;
-    @FXML
     private ComboBox<String> tabelaComboBox;
     @FXML
     private Button potwierdzButton;
@@ -33,8 +29,6 @@ public class UsunController extends ToolBarController{
     }
 
     private void setupUI() {
-        iloscCheckBox.setDisable(true);
-        iloscTextField.setDisable(true);
         TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6, pole7};
         Label[] etykiety = {label1, label2, label3, label4, label5, label6, label7};
 
