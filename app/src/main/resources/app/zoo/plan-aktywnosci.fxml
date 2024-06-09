@@ -75,12 +75,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="zmienOtwarcieButton" layoutX="116.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="193.0" text="Zmień godziny otwarcia">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="zmienAktywnoscButton" layoutX="334.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="219.0" text="Zmień godzinę aktywności">
+            <Button fx:id="zmienOtwarcieButton" layoutX="125.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="193.0" text="Zmień godziny otwarcia">
                <font>
                   <Font size="16.0" />
                </font>

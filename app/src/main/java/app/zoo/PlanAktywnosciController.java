@@ -57,8 +57,6 @@ public class PlanAktywnosciController extends ToolBarController {
     private Button mojPlanButton;
     @FXML
     private Button zmienOtwarcieButton;
-    @FXML
-    private Button zmienAktywnoscButton;
 
     private LocalDate currentDate;
 
