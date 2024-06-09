@@ -49,19 +49,8 @@ public class Zwierze {
         return id;
     }
 
-    public int getGatunek() {
-        return gatunek;
-    }
-
     public String getImie() {
         return imie;
     }
 
-    public int getPoziomUmiejetnosci() {
-        return poziomUmiejetnosci;
-    }
-
-    public String getNazwaGatunku() {
-        return nazwaGatunku;
-    }
 }

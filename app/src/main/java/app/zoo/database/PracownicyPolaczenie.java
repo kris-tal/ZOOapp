@@ -14,7 +14,6 @@ public class PracownicyPolaczenie {
         try (Connection connection = PsqlManager.getConnection()) {
             Statement statement = connection.createStatement();
             System.out.println("Number: " + number);
-            // Corrected SQL query to properly paginate results
             String query = "SELECT * FROM pracownicy ORDER BY id ASC LIMIT 23 OFFSET " + number + ";";
             ResultSet resultSet = statement.executeQuery(query);
     
