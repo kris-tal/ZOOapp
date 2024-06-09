@@ -45,7 +45,6 @@
             <Button fx:id="dodajButton" layoutX="684.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj" />
             <Button fx:id="usunButton" layoutX="795.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń" />
             <Button fx:id="prevButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" text="&lt;" />
-            <Button fx:id="filtrujButton" layoutX="77.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Znajdź pracownika" />
             <TableView fx:id="mainTable" layoutX="66.0" layoutY="69.0" prefHeight="587.0" prefWidth="833.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="114.2091064453125" text="ID" />
@@ -54,7 +53,6 @@
                 <TableColumn fx:id="peselColumn" prefWidth="186.33062744140625" text="PESEL" />
               </columns>
             </TableView>
-            <Button fx:id="filtrujStanowiskoButton" layoutX="246.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Pokaż stanowisko" />
 
          </children>
       </Pane>

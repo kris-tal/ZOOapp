@@ -26,10 +26,6 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private Button usunButton;
     @FXML
-    private Button filtrujButton;
-    @FXML
-    private Button filtrujStanowiskoButton;
-    @FXML
     private Button prevButton;
     @FXML
     private Button nextButton;
@@ -42,7 +38,6 @@ public class PracownicyController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltrujStanowisko());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
