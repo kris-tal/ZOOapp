@@ -26,8 +26,6 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private Button dodajButton;
     @FXML
-    private Button edytujButton;
-    @FXML
     private Button usunButton;
     @FXML
     private Button filtrujButton;
@@ -47,7 +45,6 @@ public class PracownicyController extends ToolBarController {
         super.initialize();
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
-        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
         usunButton.setOnAction(event -> {
             Pracownik selectedPracownik = mainTable.getSelectionModel().getSelectedItem();
             if(selectedPracownik != null) {
