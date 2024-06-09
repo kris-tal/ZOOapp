@@ -60,22 +60,17 @@
                 </columns>
             </TableView>
             <Button fx:id="prevButton" layoutX="66.0" layoutY="347.0" mnemonicParsing="false" text="&lt;" />
-            <Button fx:id="mojPlanButton" layoutX="40.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Mój Plan">
+            <Button fx:id="mojPlanButton" layoutX="160.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Mój Plan">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="dodajButton" layoutX="703.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj">
+            <Button fx:id="dodajButton" layoutX="593.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Dodaj">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="usunButton" layoutX="823.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="filtrujButton" layoutX="166.0" layoutY="23.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Filtruj...">
+            <Button fx:id="usunButton" layoutX="713.0" layoutY="656.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Usuń">
                <font>
                   <Font size="16.0" />
                </font>

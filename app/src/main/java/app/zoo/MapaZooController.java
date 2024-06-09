@@ -94,16 +94,5 @@ public class MapaZooController extends ToolBarController {
             root.getChildren().add(wybieg);
         }
         wybiegiTreeView.setRoot(root);
-        
-        expandAll(wybiegiTreeView.getRoot());
-    }
-
-    private void expandAll(TreeItem<String> item) {
-        if (item != null && !item.isLeaf()) {
-            item.setExpanded(true);
-            for (TreeItem<String> child : item.getChildren()) {
-                expandAll(child);
-            }
-        }
     }
 }
