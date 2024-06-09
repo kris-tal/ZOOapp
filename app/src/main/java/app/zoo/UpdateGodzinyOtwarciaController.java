@@ -1,5 +1,11 @@
 package app.zoo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalTime;
+
+import app.zoo.database.PsqlManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -43,9 +49,27 @@ public class UpdateGodzinyOtwarciaController {
             }
             int dzienTyg = (int)dzienSlider.getValue();
 
-            //update poziom zwierzecia o tym id na poziom
         });
 
+    }
+
+    private void updateGodzinyOtwarcia() {
+        int dzienTyg = (int) dzienSlider.getValue();
+        String otwarcie = odHourTextField.getText() + ":" + odMinuteChoiceBox.getValue();
+        String zamkniecie = doHourTextField.getText() + ":" + doMinuteChoiceBox.getValue();
+    
+        try (Connection conn = PsqlManager.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(
+                     "UPDATE godziny_otwarcia SET otwarcie = ?, zamkniecie = ? WHERE dzien_tygodnia = ?")) {
+    
+            pstmt.setTime(1, java.sql.Time.valueOf(LocalTime.parse(otwarcie)));
+            pstmt.setTime(2, java.sql.Time.valueOf(LocalTime.parse(zamkniecie)));
+            pstmt.setInt(3, dzienTyg);
+    
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
