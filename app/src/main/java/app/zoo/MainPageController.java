@@ -17,7 +17,11 @@ public class MainPageController extends ToolBarController{
 
     public void updateUserDetails() {
         idLabel.setText("ID: " + super.getPracownik().getID());
-        stanowiskoLabel.setText("Stanowisko: "+ MojPracownik.getRole());
+        StringBuffer s = new StringBuffer();
+        for(String uprawnienie : MojPracownik.uprawnienia) {
+            s.append(uprawnienie + ", ");
+        }
+        stanowiskoLabel.setText("Stanowisko: "+ s);
         uprawnieniaLabel.setText("Uprawnienia: " + MojPracownik.getZarzadca());
     }
 }
