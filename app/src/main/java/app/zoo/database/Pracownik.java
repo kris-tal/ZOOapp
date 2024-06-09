@@ -1,13 +1,13 @@
 package app.zoo.database;
 
 public class Pracownik {
-    int id;
+    Integer id;
     String imie;
     private String nazwisko;
     private String pesel;
     private String haslo;
 
-    public Pracownik(int id, String imie, String nazwisko, String pesel, String haslo) {
+    public Pracownik(Integer id, String imie, String nazwisko, String pesel, String haslo) {
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -31,7 +31,10 @@ public class Pracownik {
         return haslo;
     }
 
-    public int getID() {
+    public Integer getID() {
+        return id;
+    }
+    public Integer getId() {
         return id;
     }
 }
