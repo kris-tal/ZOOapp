@@ -55,6 +55,10 @@ public class PlanAktywnosciController extends ToolBarController {
     private Button usunButton;
     @FXML
     private Button mojPlanButton;
+    @FXML
+    private Button zmienOtwarcieButton;
+    @FXML
+    private Button zmienAktywnoscButton;
 
     private LocalDate currentDate;
 
@@ -107,6 +111,8 @@ public class PlanAktywnosciController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage)usunButton.getScene().getWindow()));
+        zmienOtwarcieButton.setOnAction(event -> UpdateGodzinyOtwarciaController.openGodzinyOtwarcia());
+        //zmienAktywnoscButton.setOnAction(event -> ZmienAktywnoscController.openZmienAktywnosc((Stage)zmienAktywnoscButton.getScene().getWindow()));
     
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));
         String formattedDate = currentDate.format(formatter);

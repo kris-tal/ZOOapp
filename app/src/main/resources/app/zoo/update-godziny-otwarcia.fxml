@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="170.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.zoo.UpdatePoziomController">
+    <children>
+        <Label alignment="CENTER" layoutX="112.0" layoutY="22.0" text="Dzień tygodnia:" />
+        <Button fx:id="potwierdzButton" layoutX="114.0" layoutY="127.0" mnemonicParsing="false" text="Potwierdź" />
+        <TextField fx:id="odHourTextField" layoutX="43.0" layoutY="89.0" prefHeight="26.0" prefWidth="41.0" promptText="00" />
+        <Slider fx:id="dzienSlider" blockIncrement="1.0" layoutX="41.0" layoutY="47.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" prefHeight="16.0" prefWidth="220.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Label layoutX="145.0" layoutY="93.0" text="-" />
+      <ChoiceBox fx:id="odMinutesChoiceBox" layoutX="94.0" layoutY="89.0" prefHeight="26.0" prefWidth="41.0" />
+      <Label layoutX="87.0" layoutY="92.0" text=":" />
+      <TextField fx:id="doHourTextField" layoutX="161.0" layoutY="90.0" prefHeight="26.0" prefWidth="41.0" promptText="00" />
+      <ChoiceBox fx:id="doMinutesChoiceBox" layoutX="212.0" layoutY="90.0" prefHeight="26.0" prefWidth="41.0" />
+      <Label layoutX="205.0" layoutY="93.0" text=":" />
+    </children>
+</AnchorPane>
