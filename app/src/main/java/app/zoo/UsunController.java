@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javafx.scene.control.Alert.AlertType;
+
 public class UsunController extends ToolBarController{
     @FXML
     private TextField pole1, pole2, pole3, pole4, pole5, pole6, pole7;
@@ -81,25 +83,10 @@ public class UsunController extends ToolBarController{
                     columnNames.add(columnName);
                     columnTypes.add(metaData.getColumnTypeName(i));
                     columnNumber++;
+                    System.out.println(columnName + " " + metaData.getColumnTypeName(i));
                 }
             }
 
-            // Check if the table is "Pracownicy" and add custom fields
-            if ("Pracownicy".equalsIgnoreCase(tableName)) {
-                // Example of adding custom fields
-                columnNames.add("id_stanowiska");
-                columnTypes.add("INTEGER");
-                columnNumber++;
-
-                columnNames.add("id gatunku/klatki");
-                columnTypes.add("INTEGER");
-                columnNumber++;
-            }
-            if ("pracownicy_stanowiska".equalsIgnoreCase(tableName)) {
-                columnNames.add("id gatunku/klatki");
-                columnTypes.add("INTEGER");
-                columnNumber++;
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,180 +109,76 @@ public class UsunController extends ToolBarController{
     }
 
     private void handlePotwierdzButtonAction() throws SQLException {
-        boolean isPracownicyTable = "Pracownicy".equalsIgnoreCase(tabelaComboBox.getValue());
-        boolean isPracownicyStanowiskaTable = "pracownicy_stanowiska".equalsIgnoreCase(tabelaComboBox.getValue());
-        try (Connection connection = PsqlManager.getConnection()) {
-            connection.setAutoCommit(false);
+    String tableName = tabelaComboBox.getSelectionModel().getSelectedItem();
+    if (tableName == null || tableName.isEmpty()) {
+        showAlert(AlertType.INFORMATION, "No table selected.");
+        return;
+    }
 
-            if(isPracownicyStanowiskaTable) {
-                String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
-                try (PreparedStatement pracownicyStanowiskaStmt = connection.prepareStatement(pracownicyStanowiskaQuery)) {
-                    pracownicyStanowiskaStmt.setInt(1, Integer.parseInt(pole1.getText()));
-                    pracownicyStanowiskaStmt.setInt(2, Integer.parseInt(pole2.getText()));
-                    pracownicyStanowiskaStmt.executeUpdate();
-                    String tableName;
-                    switch (Integer.parseInt(pole2.getText())) {
-                        case 1:
-                            tableName = "trenerzy_gatunki";
-                            break;
-                        case 2:
-                            tableName = "opiekunowie_gatunki";
-                            break;
-                        case 3:
-                            tableName = "sprzatacze_wybiegi";
-                            break;
-                        default:
-                            tableName = "";
-                            break;
-                    }
+    StringBuilder queryBuilder = new StringBuilder("DELETE FROM " + tableName + " WHERE ");
+    TextField[] fields = {pole1, pole2, pole3, pole4, pole5, pole6, pole7};
+    boolean first = true;
 
-                    if (!tableName.isEmpty() && (tableName.equals("trenerzy_gatunki") || tableName.equals("opiekunowie_gatunki"))) {
-                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_gatunku) VALUES (?, ?)", tableName);
-                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
-                            dynamicStmt.setInt(1, Integer.parseInt(pole1.getText()));
-                            dynamicStmt.setInt(2, Integer.parseInt(pole4.getText()));
-                            dynamicStmt.executeUpdate();
-                        }
-                    }
-                    else if (!tableName.isEmpty() && tableName.equals("sprzatacze_wybiegi")) {
-                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_wybiegu) VALUES (?, ?)", tableName);
-                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
-                            dynamicStmt.setInt(1, Integer.parseInt(pole1.getText()));
-                            dynamicStmt.setInt(2, Integer.parseInt(pole4.getText()));
-                            dynamicStmt.executeUpdate();
-                        }
-                    }
-
-                    connection.commit();
-                    System.out.println("Transaction successful.");
-                } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
-                    connection.rollback();
-                } finally {
-                    connection.setAutoCommit(true);
-                }
-                return;
+    ArrayList<String> values = new ArrayList<>();
+    ArrayList<String> filteredTypes = new ArrayList<>();
+    for (int i = 0; i < columnNumber; i++) {
+        if (!fields[i].isDisabled() && !fields[i].getText().isEmpty()) {
+            if (!first) {
+                queryBuilder.append(" AND ");
             }
-
-            if (isPracownicyTable) {
-                String pracownicyQuery = "INSERT INTO pracownicy (imie, nazwisko, pesel, haslo) VALUES (?, ?, ?, ?);";
-                try (PreparedStatement pracownicyStmt = connection.prepareStatement(pracownicyQuery, Statement.RETURN_GENERATED_KEYS)) {
-                    pracownicyStmt.setString(1, pole1.getText());
-                    pracownicyStmt.setString(2, pole2.getText());
-                    pracownicyStmt.setString(3, pole3.getText()); // Assuming pole3 is pesel
-                    pracownicyStmt.setString(4, pole4.getText()); // Assuming pole4 is haslo
-                    pracownicyStmt.executeUpdate();
-
-                    ResultSet rs = pracownicyStmt.getGeneratedKeys();
-                    int pracownikId = 0;
-                    if (rs.next()) {
-                        pracownikId = rs.getInt(1); // Retrieve the generated id
-                    }
-
-                    String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
-                    try (PreparedStatement pracownicyStanowiskaStmt = connection.prepareStatement(pracownicyStanowiskaQuery)) {
-                        pracownicyStanowiskaStmt.setInt(1, pracownikId);
-                        pracownicyStanowiskaStmt.setInt(2, Integer.parseInt(pole5.getText()));
-                        pracownicyStanowiskaStmt.executeUpdate();
-                    }
-
-                    String tableName;
-                    switch (Integer.parseInt(pole5.getText())) {
-                        case 1:
-                            tableName = "trenerzy_gatunki";
-                            break;
-                        case 2:
-                            tableName = "opiekunowie_gatunki";
-                            break;
-                        case 3:
-                            tableName = "sprzatacze_wybiegi";
-                            break;
-                        default:
-                            tableName = "";
-                            break;
-                    }
-
-                    if (!tableName.isEmpty() && (tableName.equals("trenerzy_gatunki") || tableName.equals("opiekunowie_gatunki"))) {
-                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_gatunku) VALUES (?, ?)", tableName);
-                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
-                            dynamicStmt.setInt(1, pracownikId);
-                            dynamicStmt.setInt(2, Integer.parseInt(pole6.getText()));
-                            dynamicStmt.executeUpdate();
-                        }
-                    }
-                    else if (!tableName.isEmpty() && tableName.equals("sprzatacze_wybiegi")) {
-                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_wybiegu) VALUES (?, ?)", tableName);
-                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
-                            dynamicStmt.setInt(1, pracownikId);
-                            dynamicStmt.setInt(2, Integer.parseInt(pole6.getText()));
-                            dynamicStmt.executeUpdate();
-                        }
-                    }
-
-                    connection.commit();
-                    System.out.println("Transaction successful.");
-                } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
-                    connection.rollback();
-                } finally {
-                    connection.setAutoCommit(true);
-                }
-            } else {
-                // Handle other table operations here if isPracownicyTable is false
-                // This part of the code was missing in the original function
-                System.out.println("Handling for non-Pracownicy tables not implemented.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to establish connection or handle transaction.");
+            queryBuilder.append(columnNames.get(i)).append(" = ?");
+            values.add(fields[i].getText());
+            filteredTypes.add(columnTypes.get(i));
+            first = false;
         }
     }
 
-    private PreparedStatement prepareStatement(Connection connection) throws SQLException {
-        StringBuilder columns = new StringBuilder();
-        StringBuilder values = new StringBuilder();
-        for (int i = 0; i < columnNumber; i++) {
-            columns.append(columnNames.get(i)).append(i < columnNumber - 1 ? ", " : "");
-            values.append("?").append(i < columnNumber - 1 ? ", " : "");
-        }
-        String insertQuery = "INSERT INTO " + tabelaComboBox.getValue() + " (" + columns + ") VALUES (" + values + ")";
-        System.out.println(insertQuery);
-        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-
-        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
-        for (int i = 0; i < columnNumber; i++) {
-            String type = columnTypes.get(i).toUpperCase();
-            System.out.println("Type: " + type);
-            try {
-                switch (type) {
-                    case "INTEGER":
-                    case "INT4":
-                        preparedStatement.setInt(i + 1, Integer.parseInt(pola[i].getText()));
-                        break;
-                    case "VARCHAR":
-                    case "CHAR":
-                    case "BPCHAR":
-                    case "TEXT":
-                        preparedStatement.setString(i + 1, pola[i].getText());
-                        break;
-                    case "TIME":
-                        preparedStatement.setTime(i + 1, Time.valueOf(pola[i].getText()));
-                        break;
-                    case "DATE":
-                        preparedStatement.setDate(i + 1, Date.valueOf(pola[i].getText()));
-                        break;
-                    default:
-                        preparedStatement.setString(i + 1, pola[i].getText());
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Error parsing integer for column " + columnNames.get(i) + ": " + e.getMessage());
-                // Handle the error appropriately, e.g., by setting a default value or skipping the record insertion.
-            }
-        }
-        System.out.println(preparedStatement);
-        return preparedStatement;
+    if (values.isEmpty()) {
+        showAlert(AlertType.INFORMATION, "No criteria for deletion. Operation aborted.");
+        return;
     }
 
+    try (Connection connection = PsqlManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString())) {
+        for (int i = 0; i < values.size(); i++) {
+            String type = filteredTypes.get(i).toUpperCase();
+            switch (type) {
+                case "INTEGER":
+                case "INT4":
+                    preparedStatement.setInt(i + 1, Integer.parseInt(values.get(i)));
+                    break;
+                case "VARCHAR":
+                case "CHAR":
+                case "BPCHAR":
+                case "TEXT":
+                    preparedStatement.setString(i + 1, values.get(i));
+                    break;
+                case "DATE":
+                    preparedStatement.setDate(i + 1, java.sql.Date.valueOf(values.get(i)));
+                    break;
+                default:
+                    preparedStatement.setString(i + 1, values.get(i));
+            }
+        }
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows > 0) {
+            showAlert(AlertType.INFORMATION, "Successfully deleted " + affectedRows + " rows.");
+        } else {
+            showAlert(AlertType.INFORMATION, "No rows were deleted.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        showAlert(AlertType.ERROR, "Failed to execute delete operation.");
+    }
+}
+
+private void showAlert(AlertType alertType, String message) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle("Operation Status");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+}
     static public void openUsun(Stage stage) {
         if(!MojPracownik.getZarzadca()) {
             MojPracownik.brakUprawnien();
