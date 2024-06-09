@@ -19,19 +19,19 @@ public class UpdateGodzinyOtwarciaController {
     @FXML
     private TextField odHourTextField;
     @FXML
-    private ChoiceBox<String> odMinuteChoiceBox;
+    private ChoiceBox<String> odMinutesChoiceBox;
     @FXML
     private TextField doHourTextField;
     @FXML
-    private ChoiceBox<String> doMinuteChoiceBox;
+    private ChoiceBox<String> doMinutesChoiceBox;
 
     @FXML
     private Button potwierdzButton;
 
     @FXML
     private void initialize() {
-        odMinuteChoiceBox.getItems().addAll("00", "15", "30", "45");
-        doMinuteChoiceBox.getItems().addAll("00", "15", "30", "45");
+        odMinutesChoiceBox.getItems().addAll("00", "15", "30", "45");
+        doMinutesChoiceBox.getItems().addAll("00", "15", "30", "45");
 
         potwierdzButton.setOnAction(event -> {
             if (validateInput()) {

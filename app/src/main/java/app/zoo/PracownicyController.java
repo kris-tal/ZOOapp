@@ -22,17 +22,7 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private TableColumn<Pracownik, String> peselColumn;
     @FXML
-    private Button dodajButton;
-    @FXML
-    private Button usunButton;
-    @FXML
-    private Button filtrujButton;
-    @FXML
-    private Button filtrujStanowiskoButton;
-    @FXML
-    private Button prevButton;
-    @FXML
-    private Button nextButton;
+    private Button dodajButton, usunButton, prevButton, nextButton;
 
     private int currentPage = 0;
 
@@ -42,7 +32,6 @@ public class PracownicyController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltrujStanowisko());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
