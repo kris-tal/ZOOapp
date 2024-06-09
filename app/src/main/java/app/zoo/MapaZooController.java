@@ -30,7 +30,7 @@ public class MapaZooController extends ToolBarController {
     @FXML
     private TreeView<String> wybiegiTreeView;
 
-    Map<Integer , Set<String>> strefy;
+    Map<Integer, Set<String>> strefy;
 
 
     @Override
@@ -38,11 +38,15 @@ public class MapaZooController extends ToolBarController {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        wypelnijStrefyComboBox();
-        strefyComboBox.setOnAction(event -> wypelnijWybiegi(strefyComboBox.getValue()));
+        strefyComboBox.setOnAction(event -> {
+            wypelnijWybiegi(strefyComboBox.getValue());
+            wypelnijStrefyComboBox();
+        });
+
     }
 
     private void wypelnijStrefyComboBox() {
+
         TreeItem<String> rootItem = new TreeItem<>("Wybiegi");
         rootItem.setExpanded(true);
         for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
