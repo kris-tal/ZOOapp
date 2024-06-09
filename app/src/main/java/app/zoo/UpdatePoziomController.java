@@ -17,13 +17,13 @@ public class UpdatePoziomController {
 
     @FXML
     private void initialize() {
-        potwierdzButton.setDisable(true);
-        if(!idTextField.getText().isEmpty() || idTextField.getText().matches("\\d+")) {
-            potwierdzButton.setDisable(false);
-        }
-        int poziom = (int)poziomSlider.getValue();
+        
         potwierdzButton.setOnAction(event -> {
+            if(idTextField.getText().isEmpty() || !idTextField.getText().matches("\\d+")) {
+                return;
+            }
             Integer id = Integer.parseInt(idTextField.getText());
+            int poziom = (int)poziomSlider.getValue();
             System.out.println("Zmieniono poziom zwierzecia o id: " + id + " na poziom: " + poziom);
             //update poziom zwierzecia o tym id na poziom
         });
