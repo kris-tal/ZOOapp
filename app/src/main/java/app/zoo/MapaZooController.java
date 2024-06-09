@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
@@ -26,6 +30,7 @@ public class MapaZooController extends ToolBarController {
     @FXML
     private TreeView<String> wybiegiTreeView;
 
+    Map<Integer , Set<String>> strefy;
 
 
     @Override
@@ -34,7 +39,7 @@ public class MapaZooController extends ToolBarController {
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
         wypelnijStrefyComboBox();
-        strefyComboBox.setOnAction(event -> wypelnijWybiegiTreeView(strefyComboBox.getValue()));
+        strefyComboBox.setOnAction(event -> wypelnijWybiegi(strefyComboBox.getValue()));
     }
 
     private void wypelnijStrefyComboBox() {
@@ -50,19 +55,29 @@ public class MapaZooController extends ToolBarController {
         }
     }
 
-    private void wypelnijWybiegiTreeView(String strefa) {
-        int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
-        try (Connection connection = PsqlManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
-            preparedStatement.setInt(1, strefaId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            wybiegiTreeView.setRoot(null);
-            while (resultSet.next()) {
-                TreeItem<String> wybiegItem = new TreeItem<>(String.valueOf(resultSet.getInt("id")));
-                wybiegiTreeView.getRoot().getChildren().add(wybiegItem);
+    private void wypelnijWybiegi(String strefa) {
+    strefy = new HashMap<>();
+    int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
+
+    try (Connection connection = PsqlManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
+            System.out.println("jestem tu");
+        preparedStatement.setInt(1, strefaId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int wybiegId = resultSet.getInt("id");
+            try (PreparedStatement speciesStmt = connection.prepareStatement("SELECT nazwa FROM gatunki WHERE id_wybiegu = ?")) {
+                speciesStmt.setInt(1, wybiegId);
+                ResultSet speciesResultSet = speciesStmt.executeQuery();
+                Set<String> gatunkiSet = new HashSet<>();
+                while (speciesResultSet.next()) {
+                    gatunkiSet.add(speciesResultSet.getString("nazwa"));
+                }
+                strefy.put(wybiegId, gatunkiSet);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 }

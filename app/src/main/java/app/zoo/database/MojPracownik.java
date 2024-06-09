@@ -17,6 +17,7 @@ public MojPracownik(int id, String imie, String nazwisko, String pesel, String h
     MojPracownik.pesel = pesel;
     MojPracownik.haslo = haslo;
     MojPracownik.zarzadca = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
+    System.out.println(zarzadca);
 }
 
 public static String getImie() {
