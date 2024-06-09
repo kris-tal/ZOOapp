@@ -47,6 +47,7 @@ public class DodajController extends ToolBarController {
         for (Label etykieta : etykiety) {
             etykieta.setText("");
         }
+    
 
         potwierdzButton.setOnAction(event -> {
             try {
@@ -107,6 +108,18 @@ public class DodajController extends ToolBarController {
                 columnTypes.add("INTEGER");
                 columnNumber++;
             }
+            if("gatunki".equalsIgnoreCase(tableName))
+            {
+                columnNames.add("id opiekuna");
+                columnTypes.add("INTEGER");
+                columnNumber++;
+            }
+            if("wybiegi".equalsIgnoreCase(tableName))
+            {
+                columnNames.add("id sprzatacza");
+                columnTypes.add("INTEGER");
+                columnNumber++;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,8 +127,8 @@ public class DodajController extends ToolBarController {
     }
 
     private void updateUI() {
-        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
-        Label[] etykiety = {label1, label2, label3, label4, label5, label6};
+        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6, pole7};
+        Label[] etykiety = {label1, label2, label3, label4, label5, label6, label7};
 
         for (int i = 0; i < pola.length; i++) {
             if (i < columnNumber) {
@@ -131,8 +144,39 @@ public class DodajController extends ToolBarController {
     private void handlePotwierdzButtonAction() throws SQLException {
         boolean isPracownicyTable = "Pracownicy".equalsIgnoreCase(tabelaComboBox.getValue());
         boolean isPracownicyStanowiskaTable = "pracownicy_stanowiska".equalsIgnoreCase(tabelaComboBox.getValue());
+        boolean isWybiegiTable = "wybiegi".equalsIgnoreCase(tabelaComboBox.getValue());
         try (Connection connection = PsqlManager.getConnection()) {
             connection.setAutoCommit(false);
+
+            if(isWybiegiTable) {
+                String wybiegiQuery = "INSERT INTO wybiegi (strefa) VALUES (?);";
+                try (PreparedStatement wybiegiStmt = connection.prepareStatement(wybiegiQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    wybiegiStmt.setInt(1, Integer.parseInt(pole1.getText())); 
+                    wybiegiStmt.executeUpdate();
+            
+                    ResultSet generatedKeys = wybiegiStmt.getGeneratedKeys();
+                    if (!generatedKeys.next()) {
+                        throw new SQLException("Creating wybieg failed, no ID obtained.");
+                    }
+                    int id_wybiegu = generatedKeys.getInt(1);
+            
+                    String sprzataczeWybiegiQuery = "INSERT INTO sprzatacze_wybiegi (id_pracownika, id_wybiegu) VALUES (?, ?);";
+                    try (PreparedStatement sprzataczeWybiegiStmt = connection.prepareStatement(sprzataczeWybiegiQuery)) {
+                        sprzataczeWybiegiStmt.setInt(1, Integer.parseInt(pole2.getText())); // id_pracownika, same as id_sprzatacza
+                        sprzataczeWybiegiStmt.setInt(2, id_wybiegu); // id_wybiegu from the generated keys
+                        sprzataczeWybiegiStmt.executeUpdate();
+                    }
+            
+                    connection.commit();
+                    System.out.println("Transaction successful.");
+                } catch (SQLException e) {
+                    System.out.println("Transaction failed: " + e.getMessage());
+                    connection.rollback();
+                } finally {
+                    connection.setAutoCommit(true);
+                }
+                return;
+            }
 
             if(isPracownicyStanowiskaTable) {
                 String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
@@ -173,6 +217,38 @@ public class DodajController extends ToolBarController {
                         }
                     }
     
+                    connection.commit();
+                    System.out.println("Transaction successful.");
+                } catch (SQLException e) {
+                    System.out.println("Transaction failed: " + e.getMessage());
+                    connection.rollback();
+                } finally {
+                    connection.setAutoCommit(true);
+                }
+                return;
+            }
+            boolean isGatunkiTable = "gatunki".equalsIgnoreCase(tabelaComboBox.getValue());
+
+            if(isGatunkiTable) {
+                String gatunkiQuery = "INSERT INTO gatunki (nazwa, id_wybiegu) VALUES (?, ?);";
+                try (PreparedStatement gatunkiStmt = connection.prepareStatement(gatunkiQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    gatunkiStmt.setString(1, pole1.getText());
+                    gatunkiStmt.setInt(2, Integer.parseInt(pole2.getText()));
+                    gatunkiStmt.executeUpdate();
+            
+                    ResultSet generatedKeys = gatunkiStmt.getGeneratedKeys();
+                    if (!generatedKeys.next()) {
+                        throw new SQLException("Creating gatunek failed, no ID obtained.");
+                    }
+                    int gatunekId = generatedKeys.getInt(1);
+            
+                    String opiekunGatunekQuery = "INSERT INTO opiekunowie_gatunki (id_pracownika, id_gatunku) VALUES (?, ?);";
+                    try (PreparedStatement opiekunGatunekStmt = connection.prepareStatement(opiekunGatunekQuery)) {
+                        opiekunGatunekStmt.setInt(1, Integer.parseInt(pole3.getText()));
+                        opiekunGatunekStmt.setInt(2, gatunekId);
+                        opiekunGatunekStmt.executeUpdate();
+                    }
+            
                     connection.commit();
                     System.out.println("Transaction successful.");
                 } catch (SQLException e) {
@@ -269,7 +345,7 @@ public class DodajController extends ToolBarController {
         System.out.println(insertQuery);
         PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
     
-        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6};
+        TextField[] pola = {pole1, pole2, pole3, pole4, pole5, pole6, pole7};
         for (int i = 0; i < columnNumber; i++) {
             String type = columnTypes.get(i).toUpperCase();
             System.out.println("Type: " + type);
