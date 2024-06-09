@@ -13,7 +13,10 @@ public class FiltrujController {
     @FXML
     private static TextField nazwiskoTextField;
 
-    private static String filtruj() {
+    private static String finalFiltr;
+
+    private void filtruj() {
+        finalFiltr = "";
         String imie = imieTextField.getText();
         String nazwisko = nazwiskoTextField.getText();
         String filtr = "";
@@ -29,7 +32,7 @@ public class FiltrujController {
             filtr = "WHERE nazwisko = " + nazwisko;    //nie wiem dokladnie w jakiej formie potrzebujesz tych stringow
         }
 
-        return filtr;
+        finalFiltr = filtr;
     }
 
     @FXML
@@ -40,6 +43,7 @@ public class FiltrujController {
     @FXML
     public static String openFiltruj() {
         SceneLoader.loadNewScene("filtruj.fxml");
-        return filtruj();
+        
+        return finalFiltr;
     }
 }

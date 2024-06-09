@@ -42,10 +42,6 @@ public class PracownicyController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        filtrujButton.setOnAction(event -> {
-            String s = "SELECT * FROM pracownicy " + FiltrujController.openFiltruj() + ";";
-            mainTable.getItems().setAll(PracownicyPolaczenie.updateArray(s));
-        });
         filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltrujStanowisko());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {

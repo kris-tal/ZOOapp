@@ -79,6 +79,9 @@ public class MapaZooController extends ToolBarController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for(Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
     }
 
     private void wypelnijTreeView() {
