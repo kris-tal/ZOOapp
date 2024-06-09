@@ -46,11 +46,11 @@ public class UpdateGodzinyOtwarciaController {
             return false;
         }
         Integer odHour = Integer.parseInt(odHourTextField.getText());
-        if (odHour < 0 || odHour > 24) {
+        if (odHour < 0 || odHour > 23) { 
             return false;
         }
         Integer doHour = Integer.parseInt(doHourTextField.getText());
-        if (doHour < 0 || doHour > 24) {
+        if (doHour < 0 || doHour > 23) { 
             return false;
         }
         return true;
@@ -58,8 +58,8 @@ public class UpdateGodzinyOtwarciaController {
 
     private void updateGodzinyOtwarcia() {
         int dzienTyg = (int) dzienSlider.getValue();
-        String otwarcie = odHourTextField.getText() + ":" + odMinuteChoiceBox.getValue();
-        String zamkniecie = doHourTextField.getText() + ":" + doMinuteChoiceBox.getValue();
+        String otwarcie = odHourTextField.getText() + ":" + odMinutesChoiceBox.getValue();
+        String zamkniecie = doHourTextField.getText() + ":" + doMinutesChoiceBox.getValue();
 
         try (Connection conn = PsqlManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(
