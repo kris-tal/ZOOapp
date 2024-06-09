@@ -1,5 +1,6 @@
 package app.zoo;
 
+import app.zoo.database.MojPracownik;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -380,6 +381,10 @@ public class DodajController extends ToolBarController {
     }
 
     static public void openDodaj(Stage stage) {
+        if(!MojPracownik.getZarzadca()) {
+            MojPracownik.brakUprawnien();
+            return;
+        }
         SceneLoader.loadScene("dodaj.fxml", stage);
     }
 }

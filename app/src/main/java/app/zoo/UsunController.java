@@ -1,5 +1,6 @@
 package app.zoo;
 
+import app.zoo.database.MojPracownik;
 import app.zoo.database.PsqlManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -296,6 +297,10 @@ public class UsunController extends ToolBarController{
     }
 
     static public void openUsun(Stage stage) {
+        if(!MojPracownik.getZarzadca()) {
+            MojPracownik.brakUprawnien();
+            return;
+        }
         SceneLoader.loadScene("usun.fxml", stage);
     }
 
