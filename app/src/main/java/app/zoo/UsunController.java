@@ -301,8 +301,8 @@ public class UsunController extends ToolBarController{
         return preparedStatement;
     }
 
-    static public void openDodaj(Stage stage) {
-        SceneLoader.loadScene("dodaj.fxml", stage);
+    static public void openUsun(Stage stage) {
+        SceneLoader.loadScene("usun.fxml", stage);
     }
 
 }

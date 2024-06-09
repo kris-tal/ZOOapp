@@ -55,6 +55,7 @@ public class ZwierzetaController extends ToolBarController {
     public void initialize() {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
+        usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;

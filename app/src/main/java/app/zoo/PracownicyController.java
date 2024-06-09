@@ -45,14 +45,7 @@ public class PracownicyController extends ToolBarController {
         super.initialize();
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
-        usunButton.setOnAction(event -> {
-            Pracownik selectedPracownik = mainTable.getSelectionModel().getSelectedItem();
-            if(selectedPracownik != null) {
-                //UsunController.openUsun(Pracownik);
-            } else {
-                // Żadna krotka nie jest zaznaczona
-            }
-        });
+        usunButton.setOnAction(event -> UsunController.openUsun((Stage)usunButton.getScene().getWindow()));
         filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
         filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltruj());
         prevButton.setOnAction(event -> {
