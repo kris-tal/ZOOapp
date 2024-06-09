@@ -108,6 +108,7 @@ public class PlanAktywnosciController extends ToolBarController {
         });
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
+        usunButton.setOnAction(event -> UsunController.openUsun((Stage)usunButton.getScene().getWindow()));
         filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
 
         
