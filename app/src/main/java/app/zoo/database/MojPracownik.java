@@ -1,5 +1,7 @@
 package app.zoo.database;
 
+import java.util.Set;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -12,16 +14,22 @@ private static String haslo;
 private static String role;
 private static boolean permissions;
 private static boolean zarzadca;
+public static Set<String> uprawnienia;
 
 public MojPracownik(int id, String imie, String nazwisko, String pesel, String haslo) {
-    MojPracownik.id = id;
-    MojPracownik.imie = imie;
-    MojPracownik.nazwisko = nazwisko;
-    MojPracownik.pesel = pesel;
-    MojPracownik.haslo = haslo;
-    MojPracownik.zarzadca = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
-    MojPracownik.zarzadca = true;
-    System.out.println(zarzadca);
+    this.id = id;
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.pesel = pesel;
+    this.haslo = haslo;
+    this.uprawnienia = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
+    this.zarzadca = false;
+    for(String uprawnienie : uprawnienia) {
+        if(uprawnienie.trim().equalsIgnoreCase("zarzadca")) {
+            this.zarzadca = true;
+            break; 
+        }
+    }
 }
 public static void brakUprawnien() {
     Alert alert = new Alert(Alert.AlertType.ERROR);
