@@ -48,7 +48,7 @@ public class PracownicyController extends ToolBarController {
         usunButton.setOnAction(event -> {
             Pracownik selectedPracownik = mainTable.getSelectionModel().getSelectedItem();
             if(selectedPracownik != null) {
-                //UsunController.openUsun();
+                //UsunController.openUsun(Pracownik);
             } else {
                 // Żadna krotka nie jest zaznaczona
             }
