@@ -56,7 +56,7 @@
                 <TableColumn fx:id="hasloColumn" prefWidth="75.0" text="Hasło" />
               </columns>
             </TableView>
-            <Button fx:id="filtrujButton1" layoutX="246.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Pokaż stanowisko" />
+            <Button fx:id="filtrujStanowiskoButton" layoutX="246.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Pokaż stanowisko" />
 
          </children>
       </Pane>

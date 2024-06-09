@@ -42,6 +42,10 @@ public class DodajController extends ToolBarController {
 
         for (TextField pole : pola) {
             pole.setDisable(true);
+            pole.setPromptText("");
+        }
+        for (Label etykieta : etykiety) {
+            etykieta.setText("");
         }
 
         potwierdzButton.setOnAction(event -> handlePotwierdzButtonAction());
