@@ -162,8 +162,8 @@ public class DodajController extends ToolBarController {
             
                     String sprzataczeWybiegiQuery = "INSERT INTO sprzatacze_wybiegi (id_pracownika, id_wybiegu) VALUES (?, ?);";
                     try (PreparedStatement sprzataczeWybiegiStmt = connection.prepareStatement(sprzataczeWybiegiQuery)) {
-                        sprzataczeWybiegiStmt.setInt(1, Integer.parseInt(pole2.getText())); // id_pracownika, same as id_sprzatacza
-                        sprzataczeWybiegiStmt.setInt(2, id_wybiegu); // id_wybiegu from the generated keys
+                        sprzataczeWybiegiStmt.setInt(1, Integer.parseInt(pole2.getText())); 
+                        sprzataczeWybiegiStmt.setInt(2, id_wybiegu); 
                         sprzataczeWybiegiStmt.executeUpdate();
                     }
             
