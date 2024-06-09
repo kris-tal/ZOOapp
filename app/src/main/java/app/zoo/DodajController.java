@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.util.ArrayList;
 
+import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
 
 public class DodajController extends ToolBarController {
@@ -26,7 +27,6 @@ public class DodajController extends ToolBarController {
     private ArrayList<String> columnNames = new ArrayList<>();
     private ArrayList<String> columnTypes = new ArrayList<>();
     private int columnNumber;
-
     @Override
     public void initialize() {
         super.initialize();
@@ -48,7 +48,14 @@ public class DodajController extends ToolBarController {
             etykieta.setText("");
         }
 
-        potwierdzButton.setOnAction(event -> handlePotwierdzButtonAction());
+        potwierdzButton.setOnAction(event -> {
+            try {
+                handlePotwierdzButtonAction();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to handle the 'Potwierdz' button action.");
+            }
+        });
     }
 
     private void setupDatabaseConnection() {
@@ -70,11 +77,11 @@ public class DodajController extends ToolBarController {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName + " WHERE 1=0")) {
             ResultSetMetaData metaData = resultSet.getMetaData();
             int totalColumnCount = metaData.getColumnCount();
-
+    
             columnNames.clear();
             columnTypes.clear();
             columnNumber = 0;
-
+    
             for (int i = 1; i <= totalColumnCount; i++) {
                 String columnName = metaData.getColumnName(i);
                 if (!columnName.equalsIgnoreCase("id")) {
@@ -82,6 +89,23 @@ public class DodajController extends ToolBarController {
                     columnTypes.add(metaData.getColumnTypeName(i));
                     columnNumber++;
                 }
+            }
+    
+            // Check if the table is "Pracownicy" and add custom fields
+            if ("Pracownicy".equalsIgnoreCase(tableName)) {
+                // Example of adding custom fields
+                columnNames.add("id_stanowiska");
+                columnTypes.add("INTEGER");
+                columnNumber++;
+    
+                columnNames.add("id gatunku/klatki");
+                columnTypes.add("INTEGER");
+                columnNumber++;
+            }
+            if ("pracownicy_stanowiska".equalsIgnoreCase(tableName)) {
+                columnNames.add("id gatunku/klatki");
+                columnTypes.add("INTEGER");
+                columnNumber++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,14 +128,133 @@ public class DodajController extends ToolBarController {
         }
     }
 
-    private void handlePotwierdzButtonAction() {
-        try (Connection connection = PsqlManager.getConnection();
-             PreparedStatement preparedStatement = prepareStatement(connection)) {
-            preparedStatement.executeUpdate();
-            System.out.println("Record added successfully.");
-        } catch (Exception e) {
+    private void handlePotwierdzButtonAction() throws SQLException {
+        boolean isPracownicyTable = "Pracownicy".equalsIgnoreCase(tabelaComboBox.getValue());
+        boolean isPracownicyStanowiskaTable = "pracownicy_stanowiska".equalsIgnoreCase(tabelaComboBox.getValue());
+        try (Connection connection = PsqlManager.getConnection()) {
+            connection.setAutoCommit(false);
+
+            if(isPracownicyStanowiskaTable) {
+                String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
+                try (PreparedStatement pracownicyStanowiskaStmt = connection.prepareStatement(pracownicyStanowiskaQuery)) {
+                    pracownicyStanowiskaStmt.setInt(1, Integer.parseInt(pole1.getText()));
+                    pracownicyStanowiskaStmt.setInt(2, Integer.parseInt(pole2.getText()));
+                    pracownicyStanowiskaStmt.executeUpdate();
+                    String tableName;
+                    switch (Integer.parseInt(pole2.getText())) {
+                        case 1:
+                            tableName = "trenerzy_gatunki";
+                            break;
+                        case 2:
+                            tableName = "opiekunowie_gatunki";
+                            break;
+                        case 3:
+                            tableName = "sprzatacze_wybiegi";
+                            break;
+                        default:
+                            tableName = "";
+                            break;
+                    }
+    
+                    if (!tableName.isEmpty() && (tableName.equals("trenerzy_gatunki") || tableName.equals("opiekunowie_gatunki"))) {
+                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_gatunku) VALUES (?, ?)", tableName);
+                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
+                            dynamicStmt.setInt(1, Integer.parseInt(pole1.getText()));
+                            dynamicStmt.setInt(2, Integer.parseInt(pole4.getText()));
+                            dynamicStmt.executeUpdate();
+                        }
+                    }
+                    else if (!tableName.isEmpty() && tableName.equals("sprzatacze_wybiegi")) {
+                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_wybiegu) VALUES (?, ?)", tableName);
+                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
+                            dynamicStmt.setInt(1, Integer.parseInt(pole1.getText()));
+                            dynamicStmt.setInt(2, Integer.parseInt(pole4.getText()));
+                            dynamicStmt.executeUpdate();
+                        }
+                    }
+    
+                    connection.commit();
+                    System.out.println("Transaction successful.");
+                } catch (SQLException e) {
+                    System.out.println("Transaction failed: " + e.getMessage());
+                    connection.rollback();
+                } finally {
+                    connection.setAutoCommit(true);
+                }
+                return;
+            }
+    
+            if (isPracownicyTable) {
+                String pracownicyQuery = "INSERT INTO pracownicy (imie, nazwisko, pesel, haslo) VALUES (?, ?, ?, ?);";
+                try (PreparedStatement pracownicyStmt = connection.prepareStatement(pracownicyQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    pracownicyStmt.setString(1, pole1.getText());
+                    pracownicyStmt.setString(2, pole2.getText());
+                    pracownicyStmt.setString(3, pole3.getText()); // Assuming pole3 is pesel
+                    pracownicyStmt.setString(4, pole4.getText()); // Assuming pole4 is haslo
+                    pracownicyStmt.executeUpdate();
+    
+                    ResultSet rs = pracownicyStmt.getGeneratedKeys();
+                    int pracownikId = 0;
+                    if (rs.next()) {
+                        pracownikId = rs.getInt(1); // Retrieve the generated id
+                    }
+    
+                    String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
+                    try (PreparedStatement pracownicyStanowiskaStmt = connection.prepareStatement(pracownicyStanowiskaQuery)) {
+                        pracownicyStanowiskaStmt.setInt(1, pracownikId);
+                        pracownicyStanowiskaStmt.setInt(2, Integer.parseInt(pole5.getText()));
+                        pracownicyStanowiskaStmt.executeUpdate();
+                    }
+    
+                    String tableName;
+                    switch (Integer.parseInt(pole5.getText())) {
+                        case 1:
+                            tableName = "trenerzy_gatunki";
+                            break;
+                        case 2:
+                            tableName = "opiekunowie_gatunki";
+                            break;
+                        case 3:
+                            tableName = "sprzatacze_wybiegi";
+                            break;
+                        default:
+                            tableName = "";
+                            break;
+                    }
+    
+                    if (!tableName.isEmpty() && (tableName.equals("trenerzy_gatunki") || tableName.equals("opiekunowie_gatunki"))) {
+                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_gatunku) VALUES (?, ?)", tableName);
+                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
+                            dynamicStmt.setInt(1, pracownikId);
+                            dynamicStmt.setInt(2, Integer.parseInt(pole6.getText()));
+                            dynamicStmt.executeUpdate();
+                        }
+                    }
+                    else if (!tableName.isEmpty() && tableName.equals("sprzatacze_wybiegi")) {
+                        String dynamicQuery = String.format("INSERT INTO %s (id_pracownika, id_wybiegu) VALUES (?, ?)", tableName);
+                        try (PreparedStatement dynamicStmt = connection.prepareStatement(dynamicQuery)) {
+                            dynamicStmt.setInt(1, pracownikId);
+                            dynamicStmt.setInt(2, Integer.parseInt(pole6.getText()));
+                            dynamicStmt.executeUpdate();
+                        }
+                    }
+    
+                    connection.commit();
+                    System.out.println("Transaction successful.");
+                } catch (SQLException e) {
+                    System.out.println("Transaction failed: " + e.getMessage());
+                    connection.rollback();
+                } finally {
+                    connection.setAutoCommit(true);
+                }
+            } else {
+                // Handle other table operations here if isPracownicyTable is false
+                // This part of the code was missing in the original function
+                System.out.println("Handling for non-Pracownicy tables not implemented.");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Failed to add record.");
+            System.out.println("Failed to establish connection or handle transaction.");
         }
     }
 
