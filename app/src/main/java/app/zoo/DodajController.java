@@ -2,10 +2,12 @@ package app.zoo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 
 import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
@@ -166,11 +168,20 @@ public class DodajController extends ToolBarController {
                         sprzataczeWybiegiStmt.setInt(2, id_wybiegu); 
                         sprzataczeWybiegiStmt.executeUpdate();
                     }
-            
+                    connection.rollback();
                     connection.commit();
-                    System.out.println("Transaction successful.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Transaction successful.");
+
                 } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+
+                    alert.showAndWait();
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -218,9 +229,17 @@ public class DodajController extends ToolBarController {
                     }
     
                     connection.commit();
-                    System.out.println("Transaction successful.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Transaction successful.");
                 } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+
+                    alert.showAndWait();
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -250,9 +269,17 @@ public class DodajController extends ToolBarController {
                     }
             
                     connection.commit();
-                    System.out.println("Transaction successful.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Transaction successful.");
                 } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+
+                    alert.showAndWait();
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -316,17 +343,25 @@ public class DodajController extends ToolBarController {
                     }
     
                     connection.commit();
-                    System.out.println("Transaction successful.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Transaction successful.");
                 } catch (SQLException e) {
-                    System.out.println("Transaction failed: " + e.getMessage());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+
+                    alert.showAndWait();
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
                 }
             } else {
-                // Handle other table operations here if isPracownicyTable is false
-                // This part of the code was missing in the original function
-                System.out.println("Handling for non-Pracownicy tables not implemented.");
+                PreparedStatement preparedStatement = prepareStatement(connection);
+                preparedStatement.executeUpdate();
+                connection.commit();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -371,8 +406,13 @@ public class DodajController extends ToolBarController {
                         preparedStatement.setString(i + 1, pola[i].getText());
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Error parsing integer for column " + columnNames.get(i) + ": " + e.getMessage());
-                // Handle the error appropriately, e.g., by setting a default value or skipping the record insertion.
+                Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Transaction Status");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+
+                    alert.showAndWait();
+                    connection.rollback();
             }
         }
         System.out.println(preparedStatement);
