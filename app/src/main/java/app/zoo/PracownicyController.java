@@ -45,7 +45,7 @@ public void initialize() {
     dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
     usunButton.setOnAction(event -> UsunController.openUsun((Stage)usunButton.getScene().getWindow()));
     filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
-    filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltruj());
+    filtrujStanowiskoButton.setOnAction(event -> FiltrujStanowiskoController.openFiltrujStanowisko());
     prevButton.setOnAction(event -> {
         if (currentPage > 0) {
             currentPage--;
