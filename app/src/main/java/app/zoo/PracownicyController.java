@@ -22,13 +22,7 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private TableColumn<Pracownik, String> peselColumn;
     @FXML
-    private Button dodajButton;
-    @FXML
-    private Button usunButton;
-    @FXML
-    private Button prevButton;
-    @FXML
-    private Button nextButton;
+    private Button dodajButton, usunButton, prevButton, nextButton;
 
     private int currentPage = 0;
 
