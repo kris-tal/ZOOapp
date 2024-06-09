@@ -1,6 +1,7 @@
 package app.zoo;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -109,7 +110,17 @@ public class PlanAktywnosciController extends ToolBarController {
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage)usunButton.getScene().getWindow()));
-        zmienOtwarcieButton.setOnAction(event -> UpdateGodzinyOtwarciaController.openGodzinyOtwarcia());
+        zmienOtwarcieButton.setOnAction(event -> {
+            if (MojPracownik.getZarzadca()) {
+                UpdateGodzinyOtwarciaController.openGodzinyOtwarcia();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Brak uprawnień");
+                alert.setHeaderText(null);
+                alert.setContentText("Nie masz uprawnień do wykonania tej operacji.");
+                alert.showAndWait();
+            }
+        });
         //zmienAktywnoscButton.setOnAction(event -> ZmienAktywnoscController.openZmienAktywnosc((Stage)zmienAktywnoscButton.getScene().getWindow()));
     
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl", "PL"));

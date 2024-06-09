@@ -3,11 +3,13 @@ package app.zoo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import app.zoo.database.MojPracownik;
 import app.zoo.database.Pracownik;
 
 public class ToolBarController {
@@ -63,7 +65,15 @@ public class ToolBarController {
 
     @FXML
     private void openPracownicy() {
-        SceneLoader.loadScene("pracownicy.fxml", (Stage)pracownicyButton.getScene().getWindow());
+        if(!MojPracownik.getZarzadca())
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak uprawnień");
+            alert.setHeaderText(null);
+            alert.setContentText("Nie masz uprawnień do wykonania tej operacji.");
+            alert.showAndWait();
+        }
+        else SceneLoader.loadScene("pracownicy.fxml", (Stage)pracownicyButton.getScene().getWindow());
     }
 
     private void openLogin() {

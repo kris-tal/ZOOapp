@@ -1,10 +1,12 @@
 package app.zoo;
 
+import app.zoo.database.MojPracownik;
 import app.zoo.database.PracownicyPolaczenie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,7 +56,17 @@ public class ZwierzetaController extends ToolBarController {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        zmienPoziomButton.setOnAction(event -> UpdatePoziomController.updatujPoziom());
+        zmienPoziomButton.setOnAction(event -> {
+            if (MojPracownik.getZarzadca()) {
+            UpdatePoziomController.updatujPoziom();
+            } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak uprawnień");
+            alert.setHeaderText(null);
+            alert.setContentText("Nie masz uprawnień do wykonania tej operacji.");
+            alert.showAndWait();
+        }
+        });
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;

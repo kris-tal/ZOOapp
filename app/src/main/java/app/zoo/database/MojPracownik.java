@@ -13,7 +13,7 @@ private static String pesel;
 private static String haslo;
 private static String role;
 private static boolean permissions;
-private static boolean zarzadca;
+public static boolean zarzadca;
 public static Set<String> uprawnienia;
 
 public MojPracownik(int id, String imie, String nazwisko, String pesel, String haslo) {
