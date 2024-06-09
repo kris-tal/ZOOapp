@@ -43,16 +43,17 @@ public class MapaZooController extends ToolBarController {
     }
 
     private void wypelnijStrefyComboBox() {
-        try (Connection connection = PsqlManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, nazwa FROM strefy");
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                String strefa = resultSet.getString("nazwa") + " (" + resultSet.getInt("id") + ")";
-                strefyComboBox.getItems().add(strefa);
+        TreeItem<String> rootItem = new TreeItem<>("Wybiegi");
+        rootItem.setExpanded(true);
+        for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
+            TreeItem<String> wybiegItem = new TreeItem<>(entry.getKey().toString());
+            rootItem.getChildren().add(wybiegItem);
+            for (String gatunek : entry.getValue()) {
+                TreeItem<String> gatunekItem = new TreeItem<>(gatunek);
+                wybiegItem.getChildren().add(gatunekItem);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        wybiegiTreeView.setRoot(rootItem);
     }
 
     private void wypelnijWybiegi(String strefa) {
