@@ -22,8 +22,6 @@ public class PracownicyController extends ToolBarController {
     @FXML
     private TableColumn<Pracownik, String> peselColumn;
     @FXML
-    private TableColumn<Pracownik, Integer> hasloColumn;
-    @FXML
     private Button dodajButton;
     @FXML
     private Button usunButton;
@@ -65,7 +63,6 @@ public class PracownicyController extends ToolBarController {
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
         nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
         peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
-        hasloColumn.setCellValueFactory(new PropertyValueFactory<>("haslo"));
         mainTable.getItems().setAll(PracownicyPolaczenie.updateTable(currentPage * 23));
 
     }

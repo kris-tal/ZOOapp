@@ -30,6 +30,6 @@ public class UpdatePoziomController {
 
     @FXML
     public static void updatujPoziom() {
-        SceneLoader.loadScene("update-poziom.fxml", new Stage());
+        SceneLoader.loadNewScene("update-poziom.fxml");
     }
 }

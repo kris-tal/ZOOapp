@@ -37,6 +37,6 @@ public class FiltrujStanowiskoController {
 
     @FXML
     public static void openFiltruj() {
-        SceneLoader.loadScene("filtruj.fxml", new Stage());
+        SceneLoader.loadNewScene("filtruj.fxml");
     }
 }

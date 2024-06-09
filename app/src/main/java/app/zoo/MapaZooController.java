@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import app.zoo.database.Pracownik;
 import app.zoo.database.PsqlManager;
@@ -86,13 +83,16 @@ public class MapaZooController extends ToolBarController {
 
     private void wypelnijTreeView() {
         TreeItem<String> root = new TreeItem<>(strefyComboBox.getValue());
+        List<TreeItem<String>> wybiegiItems = new ArrayList<>();
+
         for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
             TreeItem<String> wybieg = new TreeItem<>("Wybieg " + entry.getKey());
             for (String gatunek : entry.getValue()) {
                 wybieg.getChildren().add(new TreeItem<>(gatunek));
             }
-            root.getChildren().add(wybieg);
+            wybiegiItems.add(wybieg);
         }
-        wybiegiTreeView.setRoot(root);
+
+        root.getChildren().addAll(wybiegiItems);
     }
 }
