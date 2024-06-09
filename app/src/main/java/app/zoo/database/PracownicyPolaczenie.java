@@ -31,4 +31,23 @@ public class PracownicyPolaczenie {
         }
         return pracownicy;
     }
+    public static List<Pracownik> updateArray(String query) {
+        List<Pracownik> pracownicy = new ArrayList<>();
+        try (Connection connection = PsqlManager.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+    
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String imie = resultSet.getString("imie");
+                String nazwisko = resultSet.getString("nazwisko");
+                String pesel = resultSet.getString("pesel");
+                String haslo = resultSet.getString("haslo");
+                pracownicy.add(new Pracownik(id, imie, nazwisko, pesel, haslo));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pracownicy;
+    }
 }

@@ -9,11 +9,11 @@ public class FiltrujController {
     @FXML
     private Button potwierdzButton;
     @FXML
-    private TextField imieTextField;
+    private static TextField imieTextField;
     @FXML
-    private TextField nazwiskoTextField;
+    private static TextField nazwiskoTextField;
 
-    private String filtruj() {
+    private static String filtruj() {
         String imie = imieTextField.getText();
         String nazwisko = nazwiskoTextField.getText();
         String filtr = "";
@@ -38,7 +38,8 @@ public class FiltrujController {
     }
 
     @FXML
-    public static void openFiltruj() {
+    public static String openFiltruj() {
         SceneLoader.loadNewScene("filtruj.fxml");
+        return filtruj();
     }
 }
