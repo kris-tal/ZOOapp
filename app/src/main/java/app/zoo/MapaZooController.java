@@ -30,7 +30,7 @@ public class MapaZooController extends ToolBarController {
     @FXML
     private TreeView<String> wybiegiTreeView;
 
-    Map<Integer, Set<String>> strefy;
+    Map<Integer , Set<String>> strefy;
 
 
     @Override
@@ -38,51 +38,58 @@ public class MapaZooController extends ToolBarController {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
-        strefyComboBox.setOnAction(event -> {
-            wypelnijWybiegi(strefyComboBox.getValue());
-            wypelnijStrefyComboBox();
-        });
-
+        wypelnijStrefyComboBox();
+        strefyComboBox.setOnAction(event -> wypelnijWybiegi(strefyComboBox.getValue()));
     }
 
     private void wypelnijStrefyComboBox() {
-
-        TreeItem<String> rootItem = new TreeItem<>("Wybiegi");
-        rootItem.setExpanded(true);
-        for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
-            TreeItem<String> wybiegItem = new TreeItem<>(entry.getKey().toString());
-            rootItem.getChildren().add(wybiegItem);
-            for (String gatunek : entry.getValue()) {
-                TreeItem<String> gatunekItem = new TreeItem<>(gatunek);
-                wybiegItem.getChildren().add(gatunekItem);
+        try (Connection connection = PsqlManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, nazwa FROM strefy");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                String strefa = resultSet.getString("nazwa") + " (" + resultSet.getInt("id") + ")";
+                strefyComboBox.getItems().add(strefa);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        wybiegiTreeView.setRoot(rootItem);
     }
 
     private void wypelnijWybiegi(String strefa) {
-    strefy = new HashMap<>();
-    int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
+        strefy = new HashMap<>();
+        int strefaId = Integer.parseInt(strefa.substring(strefa.indexOf('(') + 1, strefa.indexOf(')')));
 
-    try (Connection connection = PsqlManager.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
-            System.out.println("jestem tu");
-        preparedStatement.setInt(1, strefaId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            int wybiegId = resultSet.getInt("id");
-            try (PreparedStatement speciesStmt = connection.prepareStatement("SELECT nazwa FROM gatunki WHERE id_wybiegu = ?")) {
-                speciesStmt.setInt(1, wybiegId);
-                ResultSet speciesResultSet = speciesStmt.executeQuery();
-                Set<String> gatunkiSet = new HashSet<>();
-                while (speciesResultSet.next()) {
-                    gatunkiSet.add(speciesResultSet.getString("nazwa"));
+        try (Connection connection = PsqlManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM wybiegi WHERE strefa = ?")) {
+                System.out.println("jestem tu");
+            preparedStatement.setInt(1, strefaId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int wybiegId = resultSet.getInt("id");
+                try (PreparedStatement speciesStmt = connection.prepareStatement("SELECT nazwa FROM gatunki WHERE id_wybiegu = ?")) {
+                    speciesStmt.setInt(1, wybiegId);
+                    ResultSet speciesResultSet = speciesStmt.executeQuery();
+                    Set<String> gatunkiSet = new HashSet<>();
+                    while (speciesResultSet.next()) {
+                        gatunkiSet.add(speciesResultSet.getString("nazwa"));
+                    }
+                    strefy.put(wybiegId, gatunkiSet);
                 }
-                strefy.put(wybiegId, gatunkiSet);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-}
+
+    private void wypelnijTreeView() {
+        TreeItem<String> root = new TreeItem<>(strefyComboBox.getValue());
+        for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
+            TreeItem<String> wybieg = new TreeItem<>("Wybieg " + entry.getKey());
+            for (String gatunek : entry.getValue()) {
+                wybieg.getChildren().add(new TreeItem<>(gatunek));
+            }
+            root.getChildren().add(wybieg);
+        }
+        wybiegiTreeView.setRoot(root);
+    }
 }
