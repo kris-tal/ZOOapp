@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="170.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.zoo.UpdatePoziomController">
+<AnchorPane prefHeight="170.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.zoo.UpdateGodzinyOtwarciaController">
     <children>
         <Label alignment="CENTER" layoutX="112.0" layoutY="22.0" text="Dzień tygodnia:" />
         <Button fx:id="potwierdzButton" layoutX="114.0" layoutY="127.0" mnemonicParsing="false" text="Potwierdź" />
