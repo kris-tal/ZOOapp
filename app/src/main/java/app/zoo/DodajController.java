@@ -53,12 +53,7 @@ public class DodajController extends ToolBarController {
     
 
         potwierdzButton.setOnAction(event -> {
-            try {
-                handlePotwierdzButtonAction();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to handle the 'Potwierdz' button action.");
-            }
+            handlePotwierdzButtonAction();
         });
     }
 
@@ -144,13 +139,22 @@ public class DodajController extends ToolBarController {
         }
     }
 
-    private void handlePotwierdzButtonAction() throws SQLException {
-        boolean isPracownicyTable = "Pracownicy".equalsIgnoreCase(tabelaComboBox.getValue());
-        boolean isPracownicyStanowiskaTable = "pracownicy_stanowiska".equalsIgnoreCase(tabelaComboBox.getValue());
-        boolean isWybiegiTable = "wybiegi".equalsIgnoreCase(tabelaComboBox.getValue());
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    private void handlePotwierdzButtonAction() {
         try (Connection connection = PsqlManager.getConnection()) {
             connection.setAutoCommit(false);
-
+    
+            boolean isPracownicyTable = "Pracownicy".equalsIgnoreCase(tabelaComboBox.getValue());
+            boolean isPracownicyStanowiskaTable = "pracownicy_stanowiska".equalsIgnoreCase(tabelaComboBox.getValue());
+            boolean isWybiegiTable = "wybiegi".equalsIgnoreCase(tabelaComboBox.getValue());
+    
             if(isWybiegiTable) {
                 String wybiegiQuery = "INSERT INTO wybiegi (strefa) VALUES (?);";
                 try (PreparedStatement wybiegiStmt = connection.prepareStatement(wybiegiQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -171,25 +175,17 @@ public class DodajController extends ToolBarController {
                     }
                     connection.rollback();
                     connection.commit();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Transaction successful.");
-
+                    showAlert("Transaction Status", "Transaction successful.");
+    
                 } catch (SQLException e) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText(e.getMessage());
-
-                    alert.showAndWait();
+                    showAlert("Transaction Status", e.getMessage());
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
                 }
                 return;
             }
-
+    
             if(isPracownicyStanowiskaTable) {
                 String pracownicyStanowiskaQuery = "INSERT INTO pracownicy_stanowiska (id_pracownika, id_stanowiska, data_dodania) VALUES (?, ?, CURRENT_DATE)";
                 try (PreparedStatement pracownicyStanowiskaStmt = connection.prepareStatement(pracownicyStanowiskaQuery)) {
@@ -230,17 +226,9 @@ public class DodajController extends ToolBarController {
                     }
     
                     connection.commit();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Transaction successful.");
+                    showAlert("Transaction Status", "Transaction successful.");
                 } catch (SQLException e) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText(e.getMessage());
-
-                    alert.showAndWait();
+                    showAlert("Transaction Status", e.getMessage());
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -248,7 +236,7 @@ public class DodajController extends ToolBarController {
                 return;
             }
             boolean isGatunkiTable = "gatunki".equalsIgnoreCase(tabelaComboBox.getValue());
-
+    
             if(isGatunkiTable) {
                 String gatunkiQuery = "INSERT INTO gatunki (nazwa, id_wybiegu) VALUES (?, ?);";
                 try (PreparedStatement gatunkiStmt = connection.prepareStatement(gatunkiQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -270,17 +258,9 @@ public class DodajController extends ToolBarController {
                     }
             
                     connection.commit();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Transaction successful.");
+                    showAlert("Transaction Status", "Transaction successful.");
                 } catch (SQLException e) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText(e.getMessage());
-
-                    alert.showAndWait();
+                    showAlert("Transaction Status", e.getMessage());
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -344,17 +324,9 @@ public class DodajController extends ToolBarController {
                     }
     
                     connection.commit();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Transaction successful.");
+                    showAlert("Transaction Status", "Transaction successful.");
                 } catch (SQLException e) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Transaction Status");
-                    alert.setHeaderText(null);
-                    alert.setContentText(e.getMessage());
-
-                    alert.showAndWait();
+                    showAlert("Transaction Status", e.getMessage());
                     connection.rollback();
                 } finally {
                     connection.setAutoCommit(true);
@@ -363,10 +335,10 @@ public class DodajController extends ToolBarController {
                 PreparedStatement preparedStatement = prepareStatement(connection);
                 preparedStatement.executeUpdate();
                 connection.commit();
+                showAlert("Transaction Status", "Transaction successful.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to establish connection or handle transaction.");
+            showAlert("Transaction Status", "Failed to establish connection or handle transaction: " + e.getMessage());
         }
     }
 
