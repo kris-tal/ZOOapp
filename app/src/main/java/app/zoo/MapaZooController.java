@@ -39,7 +39,10 @@ public class MapaZooController extends ToolBarController {
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
         wypelnijStrefyComboBox();
-        strefyComboBox.setOnAction(event -> wypelnijWybiegi(strefyComboBox.getValue()));
+        strefyComboBox.setOnAction(event -> {
+            wypelnijWybiegi(strefyComboBox.getValue());
+            wypelnijTreeView();
+        });
     }
 
     private void wypelnijStrefyComboBox() {
