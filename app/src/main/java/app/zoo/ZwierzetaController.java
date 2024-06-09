@@ -39,15 +39,13 @@ public class ZwierzetaController extends ToolBarController {
     @FXML
     private Button dodajButton;
     @FXML
-    private Button edytujButton;
-    @FXML
     private Button usunButton;
-    @FXML
-    private Button filtrujButton;
     @FXML
     private Button prevButton;
     @FXML
     private Button nextButton;
+    @FXML
+    private Button zmienPoziomButton;
 
     int currentPage = 0;
 
@@ -56,6 +54,7 @@ public class ZwierzetaController extends ToolBarController {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
         usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
+        zmienPoziomButton.setOnAction(event -> UpdatePoziomController.updatujPoziom());
         prevButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
