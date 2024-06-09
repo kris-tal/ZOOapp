@@ -1,5 +1,8 @@
 package app.zoo.database;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class MojPracownik {
 private static int id;
 private static String imie;
@@ -18,6 +21,14 @@ public MojPracownik(int id, String imie, String nazwisko, String pesel, String h
     MojPracownik.haslo = haslo;
     MojPracownik.zarzadca = PracownikDao.getPracownicyWithStanowiska(imie, nazwisko, pesel);
     System.out.println(zarzadca);
+}
+public static void brakUprawnien() {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Błąd");
+    alert.setHeaderText(null);
+    alert.setContentText("Nie masz uprawnień aby wykonać tę operację");
+
+    alert.showAndWait();
 }
 
 public static String getImie() {
