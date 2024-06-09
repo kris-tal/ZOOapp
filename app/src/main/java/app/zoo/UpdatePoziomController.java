@@ -23,9 +23,13 @@ public class UpdatePoziomController {
         else {
             potwierdzButton.setDisable(false);
         }
-        int id = Integer.parseInt(idTextField.getText());
-        int poziom = (int) poziomSlider.getValue();
-        //update poziom zwierzecia o tym id na poziom
+
+        int poziom = (int)poziomSlider.getValue();
+        potwierdzButton.setOnAction(event -> {
+            Integer id = Integer.parseInt(idTextField.getText());
+            //update poziom zwierzecia o tym id na poziom
+        });
+
     }
 
     @FXML
