@@ -18,8 +18,6 @@ public class MapaZooController extends ToolBarController {
     @FXML
     private Button dodajButton;
     @FXML
-    private Button edytujButton;
-    @FXML
     private Button usunButton;
     @FXML
     private Button filtrujButton;
@@ -34,7 +32,6 @@ public class MapaZooController extends ToolBarController {
     public void initialize() {
         super.initialize();
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage) dodajButton.getScene().getWindow()));
-        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage) edytujButton.getScene().getWindow()));
         //usunButton.setOnAction(event -> UsunController.openUsun((Stage) usunButton.getScene().getWindow()));
         wypelnijStrefyComboBox();
         strefyComboBox.setOnAction(event -> wypelnijWybiegiTreeView(strefyComboBox.getValue()));

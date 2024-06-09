@@ -52,8 +52,6 @@ public class PlanAktywnosciController extends ToolBarController {
     @FXML
     private Button dodajButton;
     @FXML
-    private Button edytujButton;
-    @FXML
     private Button usunButton;
     @FXML
     private Button mojPlanButton;
@@ -110,7 +108,6 @@ public class PlanAktywnosciController extends ToolBarController {
         });
 
         dodajButton.setOnAction(event -> DodajController.openDodaj((Stage)dodajButton.getScene().getWindow()));
-        edytujButton.setOnAction(event -> EdytujController.openEdytuj((Stage)edytujButton.getScene().getWindow()));
         filtrujButton.setOnAction(event -> FiltrujController.openFiltruj());
 
         
