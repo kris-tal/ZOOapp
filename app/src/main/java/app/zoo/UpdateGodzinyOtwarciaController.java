@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class UpdateGodzinyOtwarciaController {
 
@@ -56,24 +58,39 @@ public class UpdateGodzinyOtwarciaController {
         return true;
     }
 
-    private void updateGodzinyOtwarcia() {
-        int dzienTyg = (int) dzienSlider.getValue();
-        String otwarcie = odHourTextField.getText() + ":" + odMinutesChoiceBox.getValue();
-        String zamkniecie = doHourTextField.getText() + ":" + doMinutesChoiceBox.getValue();
 
-        try (Connection conn = PsqlManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(
-                     "UPDATE godziny_otwarcia SET otwarcie = ?, zamkniecie = ? WHERE dzien_tygodnia = ?")) {
+private void updateGodzinyOtwarcia() {
+    int dzienTyg = (int) dzienSlider.getValue();
+    String otwarcie = String.format("%02d", Integer.parseInt(odHourTextField.getText())) + ":" + odMinutesChoiceBox.getValue();
+    String zamkniecie = String.format("%02d", Integer.parseInt(doHourTextField.getText())) + ":" + doMinutesChoiceBox.getValue();
 
-            pstmt.setTime(1, java.sql.Time.valueOf(LocalTime.parse(otwarcie)));
-            pstmt.setTime(2, java.sql.Time.valueOf(LocalTime.parse(zamkniecie)));
-            pstmt.setInt(3, dzienTyg);
+    try (Connection conn = PsqlManager.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(
+                 "UPDATE godziny_otwarcia SET otwarcie = ?, zamkniecie = ? WHERE dzien_tygodnia = ?")) {
 
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        pstmt.setTime(1, java.sql.Time.valueOf(LocalTime.parse(otwarcie)));
+        pstmt.setTime(2, java.sql.Time.valueOf(LocalTime.parse(zamkniecie)));
+        pstmt.setInt(3, dzienTyg);
+
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows > 0) {
+            showAlert("Sukces", "Godziny otwarcia zostały zaktualizowane.", AlertType.INFORMATION);
+        } else {
+            showAlert("Błąd", "Nie udało się zaktualizować godzin otwarcia.", AlertType.ERROR);
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        showAlert("Błąd", "Wystąpił błąd podczas aktualizacji godzin otwarcia.", AlertType.ERROR);
     }
+}
+
+private void showAlert(String title, String content, AlertType type) {
+    Alert alert = new Alert(type);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(content);
+    alert.showAndWait();
+}
 
     @FXML
     public static void openGodzinyOtwarcia() {
