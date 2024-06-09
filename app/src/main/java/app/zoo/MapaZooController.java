@@ -82,17 +82,22 @@ public class MapaZooController extends ToolBarController {
     }
 
     private void wypelnijTreeView() {
-        TreeItem<String> root = new TreeItem<>(strefyComboBox.getValue());
-        List<TreeItem<String>> wybiegiItems = new ArrayList<>();
+        TreeItem<String> root = new TreeItem<>("Wybiegi");
+        ArrayList<TreeItem<String>> wybiegi = new ArrayList<>();
 
         for (Map.Entry<Integer, Set<String>> entry : strefy.entrySet()) {
             TreeItem<String> wybieg = new TreeItem<>("Wybieg " + entry.getKey());
+            ArrayList<TreeItem<String>> gatunki = new ArrayList<>();
+
             for (String gatunek : entry.getValue()) {
-                wybieg.getChildren().add(new TreeItem<>(gatunek));
+                gatunki.add(new TreeItem<>(gatunek));
             }
-            wybiegiItems.add(wybieg);
+
+            wybieg.getChildren().addAll(gatunki);
+            wybiegi.add(wybieg);
         }
 
-        root.getChildren().addAll(wybiegiItems);
+        root.getChildren().addAll(wybiegi);
+        wybiegiTreeView.setRoot(root);
     }
 }
